@@ -1,0 +1,11 @@
+site/
+.venv/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+*.pyc
+.env
+*.egg-info/
+.DS_Store
+
+docente_privado/

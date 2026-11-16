@@ -1,0 +1,41 @@
+/* Inteligência Artificial para Decisão — identidade visual original. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap');
+:root {--ia-ink:#17273c;--ia-muted:#617184;--ia-navy:#132840;--ia-gold:#bb9861;--ia-line:#dce4ec;--ia-paper:#faf9f6;--ia-blue:#316b86;}
+[data-md-color-scheme="slate"]{--ia-ink:#eff3f7;--ia-muted:#b2c1cc;--ia-navy:#0f1e2d;--ia-line:#415164;--ia-paper:#192b3b;--ia-blue:#90b8cf;}
+body,.md-typeset{font-family:'DM Sans',system-ui,sans-serif;line-height:1.78}
+.md-typeset h1,.md-typeset h2,.md-typeset h3{font-family:'Libre Baskerville',Georgia,serif;font-weight:400;letter-spacing:-.045em;color:var(--ia-ink)}
+.md-typeset h1{font-size:2.25rem;line-height:1.25;letter-spacing:-.055em;margin:0 0 .8em}
+.md-typeset h2{font-size:1.5rem;padding-top:.6rem;padding-bottom:.45rem;border-bottom:1px solid var(--ia-line)}
+.md-typeset h3{font-size:1.12rem}
+.md-content__inner{max-width:925px;margin:auto;padding-bottom:4rem}
+.md-typeset p,.md-typeset li{font-size:.9rem}
+.md-typeset a{color:var(--ia-blue)}
+.md-header{box-shadow:none;border-bottom:1px solid var(--ia-line)}
+.md-tabs{box-shadow:none}
+.md-typeset table:not([class]){border:1px solid var(--ia-line);border-radius:8px;overflow:hidden}
+.md-typeset table:not([class]) th{background:var(--ia-paper);color:var(--ia-ink);font-size:.73rem;letter-spacing:.02em}
+.md-typeset table:not([class]) tr:hover{background:color-mix(in srgb,var(--ia-paper),transparent 45%)}
+.hero-brand,.lesson-kicker{font-size:.67rem;font-weight:700;letter-spacing:.18em;color:var(--ia-gold);text-transform:uppercase;margin:2.2rem 0 1rem}
+.hero-lede,.lesson-lede{font-family:'Libre Baskerville',Georgia,serif;font-size:1.28rem!important;line-height:1.6;color:var(--ia-muted);letter-spacing:-.026em;max-width:820px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.65rem 1.2rem;margin:2rem 0;color:var(--ia-muted);font-size:.77rem;font-weight:600}
+.hero-meta span:not(:first-child):before{content:'·';margin-right:1.1rem;color:var(--ia-gold)}
+.hero-separator{height:2px;width:78px;background:var(--ia-gold);margin:2.6rem 0}
+.course-tiles{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:2rem 0 2.7rem}
+.course-tile{display:flex;gap:18px;align-items:center;min-height:110px;padding:21px 20px;text-decoration:none!important;border:1px solid var(--ia-line);border-radius:8px;background:color-mix(in srgb,var(--ia-paper),transparent 30%);transition:border-color .15s ease,transform .15s ease}
+.course-tile:hover{border-color:var(--ia-gold);transform:translateY(-2px)}
+.tile-num{font-family:'Libre Baskerville',Georgia,serif;font-size:1.5rem;color:var(--ia-gold);min-width:35px;align-self:flex-start}
+.tile-main{display:flex;flex-direction:column;gap:4px;flex:1}.tile-main strong{font-size:.89rem;font-weight:600;line-height:1.35;color:var(--ia-ink)}.tile-main small{font-size:.72rem;color:var(--ia-muted)}.tile-arrow{color:var(--ia-gold);font-size:1.1rem;align-self:flex-start}
+.case-strip{border-left:3px solid var(--ia-gold);background:var(--ia-paper);padding:1.2rem 1.6rem;margin:2rem 0;font-size:.93rem;line-height:1.6}
+.case-label{display:block;color:var(--ia-muted);font-weight:700;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.lesson-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin:1.3rem 0}.lesson-actions a{background:var(--ia-navy);color:#fff!important;border-radius:5px;padding:.52rem .83rem;font-size:.72rem;text-decoration:none!important}.lesson-actions a:hover{background:#31516c}
+.lesson-mini{border-bottom:1px solid var(--ia-line);padding:.5rem 0 1rem;font-size:.72rem;color:var(--ia-muted)}
+.sim-shell{border:1px solid var(--ia-line);border-radius:12px;overflow:hidden;margin:1.8rem 0;box-shadow:0 7px 30px rgba(12,34,57,.055)}
+.sim-shell iframe{width:100%;height:440px;border:0;display:block;background:var(--ia-paper)}
+.lesson-footnav{display:flex;justify-content:space-between;gap:1rem;margin:3rem 0;font-size:.78rem;border-top:1px solid var(--ia-line);padding-top:1.2rem}
+.homepage-links{display:flex;flex-wrap:wrap;gap:12px;margin:2rem 0}.homepage-links a{border-bottom:1px solid var(--ia-gold);text-decoration:none!important;padding-bottom:3px;font-size:.83rem}
+.md-typeset .admonition{border-radius:6px;border-width:0 0 0 3px;background:var(--ia-paper);box-shadow:none}.md-typeset .admonition-title{background:transparent!important;font-weight:700}
+.md-typeset code{font-size:.78em}.md-typeset pre{border-radius:8px}
+.md-typeset blockquote{border-color:var(--ia-gold)}
+.md-typeset .arithmatex{overflow-x:auto}
+@media(max-width:770px){.course-tiles{grid-template-columns:1fr}.md-typeset h1{font-size:1.85rem}.hero-lede,.lesson-lede{font-size:1.05rem!important}.sim-shell iframe{height:570px}.hero-meta span{font-size:.71rem}}
+@media(prefers-reduced-motion:reduce){.course-tile{transition:none}}

@@ -1,0 +1,68 @@
+[project]
+site_name = "Inteligência Artificial para Decisão"
+site_description = "Curso introdutório para Economia e Administração: LLMs, embeddings, ferramentas, RAG e agentes"
+site_author = "Material de ensino"
+site_url = "https://paulocmarquesf.github.io/IApD/"
+nav = [
+  { "Início" = "index.md" },
+  { "Programa" = [ { "Visão geral" = "programa/index.md" }, { "Como estudar" = "programa/como-estudar.md" } ] },
+  { "Aulas" = [
+    { "01. O que um LLM faz - e o que não faz" = "aulas/01-llms-e-limites/index.md" },
+    { "02. Embeddings, similaridade e concorrência" = "aulas/02-embeddings-e-concorrencia/index.md" },
+    { "03. LLMs como componentes: extração estruturada" = "aulas/03-saidas-estruturadas/index.md" },
+    { "04. Classificação de mensagens e avaliação de LLMs" = "aulas/04-classificacao-e-avaliacao/index.md" },
+    { "05. Ferramentas: quando o LLM deve calcular" = "aulas/05-ferramentas-e-calculos/index.md" },
+    { "06. Aplicações compostas: carteiras e indicadores" = "aulas/06-aplicacoes-compostas/index.md" },
+    { "07. RAG: documentos como fonte de evidência" = "aulas/07-rag-documentos/index.md" },
+    { "08. Laboratório RAG: relatórios e política monetária" = "aulas/08-rag-copom-relatorios/index.md" },
+    { "09. Avaliar RAG: recuperar e responder" = "aulas/09-avaliacao-rag/index.md" },
+    { "10. Melhorar RAG sem perder rigor" = "aulas/10-melhorar-rag/index.md" },
+    { "11. Agentes, ferramentas e fluxos de decisão" = "aulas/11-agentes-e-workflows/index.md" },
+    { "12. Confiabilidade, avaliação e segurança de agentes" = "aulas/12-confiabilidade-e-seguranca/index.md" },
+  ] },
+  { "Caderno" = "caderno/index.md" },
+  { "Avaliações" = [ { "Visão geral" = "avaliacoes/index.md" }, { "Quizzes" = "avaliacoes/quizzes.md" }, { "PI" = "avaliacoes/prova-intermediaria.md" }, { "PF" = "avaliacoes/prova-final.md" } ] },
+  { "Suporte" = [ { "Visão geral" = "suporte/index.md" }, { "Mapa" = "suporte/mapa-conceitual.md" }, { "Folha de consulta" = "suporte/folha-de-consulta.md" }, { "Laboratórios" = "suporte/laboratorios.md" }, { "Provas: exemplos" = "suporte/provas-exemplo.md" }, { "Glossário" = "suporte/glossario.md" } ] },
+  { "Casos" = "casos/index.md" },
+]
+extra_css = ["assets/stylesheets/extra.css"]
+extra_javascript = ["assets/javascripts/mathjax.js", "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"]
+
+[project.theme]
+variant = "modern"
+language = "pt-BR"
+favicon = "assets/images/favicon.svg"
+features = ["content.code.copy", "content.tabs.link", "content.tooltips", "navigation.path", "navigation.footer", "navigation.top", "search.highlight"]
+
+[project.theme.icon]
+logo = "lucide/book-open-text"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "indigo"
+accent = "indigo"
+toggle.icon = "lucide/moon"
+toggle.name = "Alternar para tema escuro"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "indigo"
+accent = "indigo"
+toggle.icon = "lucide/sun"
+toggle.name = "Alternar para tema claro"
+
+[project.markdown_extensions]
+admonition = {}
+attr_list = {}
+footnotes = {}
+md_in_html = {}
+toc.permalink = true
+pymdownx.arithmatex.generic = true
+pymdownx.details = {}
+pymdownx.superfences.custom_fences = [{ name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }]
+pymdownx.tabbed.alternate_style = true
+pymdownx.tasklist.custom_checkbox = true
+
+# As notas docentes e os gabaritos ficam FORA de docs/ e NÃO são publicados.
