@@ -1,0 +1,9 @@
+(function(){'use strict';
+async function init(el){let src=el.getAttribute('data-quiz-src'),payload;try{const r=await fetch(src);if(!r.ok)throw Error('HTTP '+r.status);payload=await r.json();}catch(err){el.textContent='Não foi possível abrir o quiz: '+err.message;return}
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let h='<div class="qname">'+esc(payload.category||'Quiz interativo')+'</div><h3>'+esc(payload.title)+'</h3><p>Marque uma resposta por questão. As justificativas aparecem após a correção.</p>';
+payload.questions.forEach((q,i)=>{h+='<div class="qitem"><p>'+(i+1)+'. '+esc(q.text)+'</p>';q.options.forEach((x,j)=>{h+='<label><input type="radio" name="'+esc(payload.id)+'-q'+i+'" value="'+j+'">'+esc(x)+'</label>'});h+='<div class="feedback" hidden id="'+esc(payload.id)+'-f'+i+'"></div></div>'});h+='<button type="button">Conferir respostas</button> <span class="score" aria-live="polite"></span>';el.innerHTML=h;
+el.querySelector('button').onclick=()=>{let score=0;payload.questions.forEach((q,i)=>{const chosen=el.querySelector('input[name="'+payload.id+'-q'+i+'"]:checked'),value=chosen?Number(chosen.value):-1,ok=value===q.answer;score+=ok?1:0;const f=el.querySelector('#'+payload.id+'-f'+i);f.hidden=false;f.innerHTML='<strong class="'+(ok?'good':'bad')+'">'+(ok?'Correto.':value===-1?'Não respondida.':'Revise sua resposta.')+'</strong><p>'+esc(q.explanation)+'</p>'});el.querySelector('.score').textContent='Resultado: '+score+'/'+payload.questions.length;};}
+function scan(){document.querySelectorAll('.qwidget[data-quiz-src]:not([data-loaded])').forEach(x=>{x.dataset.loaded='1';init(x);});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',scan);else scan();
+})();

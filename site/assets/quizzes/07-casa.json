@@ -1,0 +1,51 @@
+{
+  "id": "home-07",
+  "category": "Abertura da aula seguinte",
+  "title": "Atividade domiciliar da Aula 07",
+  "questions": [
+    {
+      "text": "Para comparar duas reuniões, que evidência precisa existir?",
+      "options": [
+        "Apenas o trecho mais recente",
+        "Trechos pertinentes de ambos os períodos",
+        "Somente o resumo produzido pelo modelo",
+        "Qualquer fonte sem data"
+      ],
+      "answer": 1,
+      "explanation": "A comparação exige referência aos dois períodos."
+    },
+    {
+      "text": "Qual informação é indispensável para justificar a conclusão da atividade?",
+      "options": [
+        "Somente um screenshot bonito",
+        "Entradas utilizadas, critério e resultado observado",
+        "O número de linhas de código gerado",
+        "A opinião do assistente sem experimentos"
+      ],
+      "answer": 1,
+      "explanation": "Uma conclusão verificável explicita entrada, procedimento e evidência."
+    },
+    {
+      "text": "Ao solicitar uma correção no Codex, o que o estudante deve fazer em seguida?",
+      "options": [
+        "Presumir que a alteração está correta",
+        "Reexecutar os testes relevantes e examinar os casos de falha",
+        "Apagar a base e começar sem referência",
+        "Alterar manualmente uma linha de código"
+      ],
+      "answer": 1,
+      "explanation": "O ciclo de vibe coding exige inspeção e teste após cada alteração."
+    },
+    {
+      "text": "Que comportamento é esperado quando falta informação para responder?",
+      "options": [
+        "Inventar o valor mais provável",
+        "Indicar o limite da evidência ou pedir a informação necessária",
+        "Copiar uma resposta de outra tarefa",
+        "Esconder a ausência no relatório"
+      ],
+      "answer": 1,
+      "explanation": "O sistema deve respeitar os limites das fontes e registrar a insuficiência."
+    }
+  ]
+}

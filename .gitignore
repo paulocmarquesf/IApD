@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+.env.*
+!.env.example
+.cache/
+*.pyc
+*.log
+# Material reservado ao docente: manter local e não sincronizar com repositórios públicos.
+docente_privado/

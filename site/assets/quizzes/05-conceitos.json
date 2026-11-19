@@ -1,0 +1,51 @@
+{
+  "id": "quiz-05",
+  "category": "Verificação conceitual",
+  "title": "Aula 05 · Verifique a compreensão",
+  "questions": [
+    {
+      "text": "Ao calcular a volatilidade de uma carteira, o que não pode ser ignorado?",
+      "options": [
+        "O nome escolhido para a carteira",
+        "A correlação entre retornos dos ativos",
+        "O número de slides da apresentação",
+        "A ordem alfabética dos ativos"
+      ],
+      "answer": 1,
+      "explanation": "A covariância influencia o risco agregado, mesmo com pesos fixos."
+    },
+    {
+      "text": "Qual conceito corresponde à definição: “Retornos, covariâncias e otimização devem ser executados e verificados, não produzidos por fluência textual.”?",
+      "options": [
+        "Tool calling",
+        "Contratos de ferramenta",
+        "Cálculo determinístico",
+        "Rastreabilidade"
+      ],
+      "answer": 2,
+      "explanation": "Cálculo determinístico: Retornos, covariâncias e otimização devem ser executados e verificados, não produzidos por fluência textual."
+    },
+    {
+      "text": "Qual atitude é consistente com uma análise verificável da aplicação desta aula?",
+      "options": [
+        "Registrar entradas, resultados e critérios de verificação",
+        "Avaliar apenas se a interface parece convincente",
+        "Desconsiderar os casos sem resposta",
+        "Considerar todo texto fluente automaticamente correto"
+      ],
+      "answer": 0,
+      "explanation": "A qualidade depende de evidências auditáveis, critérios explícitos e tratamento de falhas."
+    },
+    {
+      "text": "Qual é a melhor função do exemplo mínimo apresentado nesta aula?",
+      "options": [
+        "Substituir completamente a verificação em dados reais",
+        "Mostrar a estrutura essencial do conceito de forma conferível",
+        "Demonstrar que o sistema nunca cometerá erros",
+        "Garantir resultados universais com amostra pequena"
+      ],
+      "answer": 1,
+      "explanation": "Pesos (0,5;0,5), desvios (0,1;0,2) e correlação 0 resultam em variância 0,0125 e desvio ≈0,1118."
+    }
+  ]
+}

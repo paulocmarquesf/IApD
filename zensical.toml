@@ -1,0 +1,54 @@
+[project]
+site_name = "Inteligência Artificial para Decisão"
+site_description = "Insper · Economia e Administração · LLMs, ferramentas, RAG e agentes"
+site_author = "Paulo C. Marques F."
+copyright = "© 2026 Insper · Paulo C. Marques F."
+nav = [
+  { "Início" = "index.md" },
+  { "Programa" = [ {"Visão geral" = "programa/index.md"}, {"Como funciona" = "programa/metodologia.md"}, {"Codex: API ou CLI" = "programa/codex.md"} ] },
+  { "Aulas" = [
+    { "01. Como uma máquina produz linguagem?" = "aulas/01-como-uma-maquina-produz-linguagem/index.md" },
+    { "02. Do texto ao mapa dos consumidores" = "aulas/02-do-texto-ao-mapa-dos-consumidores/index.md" },
+    { "03. Quando o LLM vira uma função de negócios" = "aulas/03-quando-o-llm-vira-uma-funcao-de-negocios/index.md" },
+    { "04. Podemos confiar na triagem automática?" = "aulas/04-podemos-confiar-na-triagem-automatica/index.md" },
+    { "05. Um assistente que calcula, não adivinha" = "aulas/05-um-assistente-que-calcula-nao-adivinha/index.md" },
+    { "06. Quando a IA combina informações" = "aulas/06-quando-a-ia-combina-informacoes/index.md" },
+    { "07. A IA precisa mostrar suas fontes" = "aulas/07-a-ia-precisa-mostrar-suas-fontes/index.md" },
+    { "08. Uma IA que acompanha a conversa" = "aulas/08-uma-ia-que-acompanha-a-conversa/index.md" },
+    { "09. A IA encontrou a informação certa?" = "aulas/09-a-ia-encontrou-a-informacao-certa/index.md" },
+    { "10. Melhorou mesmo? Experimentos com IA" = "aulas/10-melhorou-mesmo/index.md" },
+    { "11. Quem decide o próximo passo?" = "aulas/11-quem-decide-o-proximo-passo/index.md" },
+    { "12. Até onde podemos confiar em um agente?" = "aulas/12-ate-onde-podemos-confiar-num-agente/index.md" },
+  ] },
+  { "Avaliações" = [{"Visão geral" = "avaliacoes/index.md"},{"Prova intermediária" = "avaliacoes/pi.md"},{"Prova final" = "avaliacoes/pf.md"}] },
+  { "Caderno de atividades" = "caderno/index.md" },
+  { "Handouts" = "apoio/handouts.md" },
+  { "Projetos acompanhados" = "projetos/index.md" },
+  { "Simuladores" = "apoio/simuladores.md" },
+  { "Casos e dados" = "casos/index.md" },
+  { "Aplicações de referência" = "casos/referencias.md" },
+  { "Referências" = "apoio/bibliografia.md" },
+  { "Apoio ao estudo" = [{"Mapa conceitual" = "apoio/mapa.md"},{"Folha de consulta" = "apoio/consulta.md"},{"Glossário" = "apoio/glossario.md"}] }
+]
+extra_css = ["assets/stylesheets/course.css"]
+extra_javascript = ["assets/javascripts/gate.js","assets/javascripts/quiz.js", "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"]
+[project.theme]
+variant = "modern"
+language = "pt-BR"
+logo = "assets/images/insper-logo.png"
+favicon = "assets/images/insper-logo.png"
+features = ["navigation.footer", "navigation.path", "navigation.top", "content.code.copy", "search.highlight", "content.tabs.link"]
+[[project.theme.palette]]
+scheme = "default"
+primary = "red"
+accent = "red"
+[project.markdown_extensions]
+admonition = {}
+attr_list = {}
+md_in_html = {}
+footnotes = {}
+toc.permalink = true
+pymdownx.arithmatex.generic = true
+pymdownx.details = {}
+pymdownx.tabbed.alternate_style = true
+pymdownx.superfences.custom_fences = [{name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format"}]

@@ -1,0 +1,9 @@
+[project]
+name = "ia-para-decisao"
+version = "1.0.0"
+description = "Inteligência Artificial para Decisão — Insper"
+requires-python = ">=3.10"
+dependencies = []
+[project.optional-dependencies]
+site = ["zensical"]
+lab = ["openai", "openai-codex", "numpy", "pandas", "scikit-learn", "matplotlib", "nbformat"]
