@@ -1,0 +1,63 @@
+<!doctype html><html lang="pt-BR" data-root="../../" class="js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Workflows e agentes de IA — Inteligência Artificial para Decisão</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></head><body><header class="site-header"><a href="../../index.html"><img src="../../assets/images/insper-logo.png" alt="Insper"></a><div><b class="course-name">Inteligência Artificial para Decisão</b><small>Ciências Econômicas e Administração · 2027-1</small></div></header><div class="layout"><nav class="side" aria-label="Navegação do curso"><strong>Disciplina</strong><a href="../../index.html" >Início</a><a href="../../programa/index.html" >Programa</a><a href="../../programa/aulas.html" >Lista de aulas</a><a href="../../aulas/01/index.html" >01. Fundamentos dos Large Language Models</a><a href="../../aulas/02/index.html" >02. Embeddings e similaridade semântica</a><a href="../../aulas/03/index.html" >03. Engenharia de prompts e saídas estruturadas</a><a href="../../aulas/04/index.html" >04. Avaliação de aplicações com LLMs</a><a href="../../aulas/05/index.html" >05. Integração de ferramentas computacionais</a><a href="../../aulas/06/index.html" >06. Composição de aplicações com LLMs</a><a href="../../aulas/07/index.html" >07. Retrieval-Augmented Generation</a><a href="../../aulas/08/index.html" >08. Sistemas conversacionais (chatbots)</a><a href="../../aulas/09/index.html" >09. Avaliação da recuperação de informação</a><a href="../../aulas/10/index.html" >10. Avaliação experimental de aplicações de IA</a><a href="../../aulas/11/index.html" class="active" aria-current="page">11. Workflows e agentes de IA</a><a href="../../aulas/12/index.html" >12. Confiabilidade e segurança de agentes</a><a href="../../caderno/index.html" >Caderno de exercícios</a><a href="../../apoio/simuladores.html" >Simuladores</a><a href="../../casos/index.html" >Casos e dados</a><a href="../../avaliacoes/index.html" >Avaliações</a><a href="../../apoio/bibliografia.html" >Bibliografia</a><a href="../../apoio/codex.html" >Codex</a></nav><article class="page"><h1>Workflows e agentes de IA</h1>
+<p>&lt;span class="eyebrow"&gt;Aula 11 · Operações empresariais&lt;/span&gt;</p>
+<blockquote>
+<p><strong>Propósito:</strong> Quem escolhe o próximo passo e como demonstrar que o processo termina no estado correto?</p>
+</blockquote>
+<p><strong>Organização do encontro:</strong> 15 minutos de quiz inicial (aulas 2 a 12); 45 minutos de conceitos e exercícios; 60 minutos de laboratório. A Aula 1 reserva 60 minutos para conceitos e 60 para o laboratório, sem quiz prévio.</p>
+<p><strong>Objetivos:</strong> Distinguir workflow predefinido de comportamento agentivo, modelar estados e transições e instrumentar chamadas de ferramentas em ambiente simulado.</p>
+<h2>Fundamentação conceitual</h2>
+<h3>1. Fluxos determinísticos e decisões delegadas</h3>
+<p>Um <em>workflow</em> especifica antecipadamente etapas, estados, condições e rotas possíveis. Um agente pode decidir dinamicamente qual ferramenta utilizar e quais passos seguir, dentro de permissões definidas. A distinção não é binária: uma aplicação pode ter partes determinísticas e trechos delegados ao modelo. Em todos os casos, efeitos sobre sistemas externos devem permanecer sujeitos a regras de autorização.</p>
+<p>O estado <span class="math">\(S_t\)</span> pode incluir identificador do pedido, data de entrega, motivo da solicitação, status da aprovação e resultado de cada ferramenta. Uma transição é uma função <span class="math">\(S_{t+1}=F(S_t,a_t,o_t)\)</span>, em que <span class="math">\(a_t\)</span> é ação proposta e <span class="math">\(o_t\)</span> é retorno observado. Os estados e transições precisam ser auditáveis.</p>
+<h3>2. Exemplo de política de devolução</h3>
+<p>Suponha uma política didática: devoluções por arrependimento podem ser solicitadas até 7 dias após recebimento; depois desse prazo, o sistema encaminha para análise humana. Para um pedido entregue há 5 dias, a condição temporal é satisfeita; entregue há 9 dias, não é. O prazo não deve ser inventado pelo LLM, mas consultado na política efetivamente fornecida. Situações de defeito podem exigir outra rota; o exemplo não pretende representar a legislação aplicável.</p>
+<p>A ferramenta <code>consultar_pedido</code> retorna data e situação. A ferramenta <code>consultar_politica</code> retorna a regra. A aplicação pode propor <code>abrir_solicitacao</code>, mas não deve executar <code>efetuar_estorno</code> sem aprovação explícita e verificável.</p>
+<h3>3. Controle de ações e idempotência</h3>
+<p>Um teste importante verifica se a repetição de uma solicitação não executa duas vezes o mesmo efeito. Esse princípio é conhecido como <strong>idempotência operacional</strong>. Um identificador único de requisição e um registro de status permitem rejeitar operações duplicadas. Limitar o número de passos do agente, registrar timeouts e exigir condição de parada previne loops.</p>
+<h3>4. Rastros e testes</h3>
+<p>O laboratório produzirá rastros com estado inicial, ferramentas chamadas, argumentos, retornos, condição avaliada e estado final. Um bom teste inclui pedidos elegíveis, inelegíveis, dados ausentes, políticas conflitantes e solicitações repetidas. Um agente com resposta textual correta mas com uma operação não autorizada executada <strong>falhou</strong>. A avaliação deve distinguir trajetória, resultado e respeito às permissões.</p>
+<h2>Exemplo de discussão para resolução manual</h2>
+<p>&lt;div class="tcolorbox"&gt;</p>
+<p>Uma política sintética permite devoluções até sete dias após a entrega. Pedido X foi entregue há seis dias e o item consta como elegível; Pedido Y foi entregue há dez dias. Desenhar transições desde "solicitação_recebida" até "elegibilidade_verificada", usando data de entrega e política. Em Y, a aplicação não deve inventar uma exceção; deve negar conforme regra ou escalar para análise humana, segundo o contrato operacional. Comparar grafo com ciclo indevido versus grafo com condição de parada.</p>
+<p>&lt;/div&gt;</p>
+<h2>Laboratório: aplicação e verificação</h2>
+<p><strong>Dados da aula:</strong> <a href="../../dados/aula/aula_11/eventos.csv"><code>eventos.csv</code></a>, <a href="../../dados/aula/aula_11/pedidos.csv"><code>pedidos.csv</code></a>, <a href="../../dados/aula/aula_11/politicas.html"><code>politicas.md</code></a>. <strong>Todos são didáticos/sintéticos.</strong></p>
+<h3>Problema de decisão e dados disponibilizados</h3>
+<p><strong>Situação.</strong> Uma varejista deseja processar trocas e devoluções com estados verificáveis. O modelo pode interpretar linguagem, mas a autorização para mudar estados deve ser definida por regras de negócio.</p>
+<p><strong>Pacote de dados.</strong> <code>pedidos.csv</code>: 15 pedidos fictícios, datas de entrega e situação; <code>politicas.md</code>: regras sintéticas de sete dias e exceções; <code>eventos.csv</code>: casos de ferramenta indisponível, pedido desconhecido e solicitação duplicada.</p>
+<h3>Laboratório em aula (60 minutos)</h3>
+<ol>
+<li><p>Desenhar à mão grafo de estados recebido, identificado, verificado, aguardando-aprovacao, concluido e escalado, com duas guardas.</p>
+</li>
+<li><p>Pedir ao Codex simulador visual com ferramentas de leitura, transições determinísticas e log de estado anterior/ação/resposta/estado posterior.</p>
+</li>
+<li><p>Executar cinco cenários: elegível, fora do prazo, pedido inexistente, indisponibilidade e chamada duplicada.</p>
+</li>
+<li><p>Comparar workflow determinístico com seleção supervisionada de ferramentas de leitura; jamais liberar escrita por simples texto do LLM.</p>
+</li>
+</ol>
+<h3>Especificação inicial por prompt</h3>
+<blockquote>
+<p><strong>Crie simulador local de trocas/devoluções com estados, guardas e log auditável. Todos os efeitos devem ser fictícios. Implemente interfaces gráficas de inspeção, testes de erro, interrupção e retomada; ações de escrita exigem validação por código independente de modelos.</strong></p>
+</blockquote>
+<h3>Critérios de aceitação</h3>
+<p>Estado final deriva de eventos persistidos; nenhuma guarda ignorada; ações duplicadas tratadas idempotentemente; falhas geram estado de exceção; rastros podem ser reconstituídos por pedido.</p>
+<h3>Articulação com as demais aulas</h3>
+<p>A Aula 12 acrescenta política de permissões, aprovação humana e avaliação sistemática da segurança das trajetórias.</p>
+<h3>Roteiro de verificação com o Codex</h3>
+<ol>
+<li>Examine a base de referência e registre a origem, as colunas e a unidade de análise.</li>
+<li>Na <strong>interface gráfica do Codex</strong>, descreva a aplicação, as entradas, as saídas e os critérios de aceitação; solicite que o agente crie os arquivos.</li>
+<li>Peça ao Codex que execute os testes, mostre os resultados e explique qualquer falha encontrada. O aluno não escreve código nem usa terminal.</li>
+<li>Compare pelo menos um resultado com um cálculo ou verificação manual realizado em sala.</li>
+<li>Registre dois casos em que a aplicação deveria se abster, solicitar esclarecimento ou sinalizar uma limitação.</li>
+</ol>
+<p><strong>Material complementar:</strong> <a href="slides.pdf">slides da aula (PDF)</a> · <a href="slides.tex">fonte LaTeX</a> · <a href="exercicios.html">exercícios no papel</a> · <a href="casa.html">atividade para casa</a>.</p>
+<h2>Exercícios e preparação da prova</h2>
+<p>Os dez problemas desta aula estão reunidos no <a href="exercicios.html">caderno de exercícios</a>. Os alunos devem explicitar as contas e justificar as conclusões. A escrita manual de código não é parte das avaliações.</p>
+<h2>Verificação da aprendizagem</h2>
+<p>O quiz oficial de 15 minutos no início da aula cobre os conceitos da Aula 10 e a atividade correspondente, condicionada ao depósito no GitHub. As questões oficiais e o gabarito são reservados ao professor.</p>
+<p><a href="../../apoio/treino.html#aula-11">Questões formativas de treinamento</a> (não são as questões da avaliação oficial).</p>
+<h2>Referências para aprofundamento</h2>
+<p>Consulte a <a href="../../apoio/bibliografia.html">bibliografia da disciplina</a> e as fontes técnicas indicadas no material específico.</p>
+<footer class="footer">Insper · Paulo C. Marques F. · Materiais didáticos · Dados sintéticos quando indicado.</footer></article></div><script src="../../assets/js/gate.js"></script><script src="../../assets/js/quiz.js"></script></body></html>

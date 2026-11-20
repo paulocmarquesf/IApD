@@ -1,0 +1,73 @@
+<!doctype html><html lang="pt-BR" data-root="../../" class="js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Avaliação de aplicações com LLMs — Inteligência Artificial para Decisão</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></head><body><header class="site-header"><a href="../../index.html"><img src="../../assets/images/insper-logo.png" alt="Insper"></a><div><b class="course-name">Inteligência Artificial para Decisão</b><small>Ciências Econômicas e Administração · 2027-1</small></div></header><div class="layout"><nav class="side" aria-label="Navegação do curso"><strong>Disciplina</strong><a href="../../index.html" >Início</a><a href="../../programa/index.html" >Programa</a><a href="../../programa/aulas.html" >Lista de aulas</a><a href="../../aulas/01/index.html" >01. Fundamentos dos Large Language Models</a><a href="../../aulas/02/index.html" >02. Embeddings e similaridade semântica</a><a href="../../aulas/03/index.html" >03. Engenharia de prompts e saídas estruturadas</a><a href="../../aulas/04/index.html" class="active" aria-current="page">04. Avaliação de aplicações com LLMs</a><a href="../../aulas/05/index.html" >05. Integração de ferramentas computacionais</a><a href="../../aulas/06/index.html" >06. Composição de aplicações com LLMs</a><a href="../../aulas/07/index.html" >07. Retrieval-Augmented Generation</a><a href="../../aulas/08/index.html" >08. Sistemas conversacionais (chatbots)</a><a href="../../aulas/09/index.html" >09. Avaliação da recuperação de informação</a><a href="../../aulas/10/index.html" >10. Avaliação experimental de aplicações de IA</a><a href="../../aulas/11/index.html" >11. Workflows e agentes de IA</a><a href="../../aulas/12/index.html" >12. Confiabilidade e segurança de agentes</a><a href="../../caderno/index.html" >Caderno de exercícios</a><a href="../../apoio/simuladores.html" >Simuladores</a><a href="../../casos/index.html" >Casos e dados</a><a href="../../avaliacoes/index.html" >Avaliações</a><a href="../../apoio/bibliografia.html" >Bibliografia</a><a href="../../apoio/codex.html" >Codex</a></nav><article class="page"><h1>Avaliação de aplicações com LLMs</h1>
+<p>&lt;span class="eyebrow"&gt;Aula 04 · Operações empresariais&lt;/span&gt;</p>
+<blockquote>
+<p><strong>Propósito:</strong> Como medir se a triagem automatizada é útil quando os erros têm consequências diferentes?</p>
+</blockquote>
+<p><strong>Organização do encontro:</strong> 15 minutos de quiz inicial (aulas 2 a 12); 45 minutos de conceitos e exercícios; 60 minutos de laboratório. A Aula 1 reserva 60 minutos para conceitos e 60 para o laboratório, sem quiz prévio.</p>
+<p><strong>Objetivos:</strong> Construir um protocolo de avaliação com rótulos de referência, métricas de classificação, tipologia de falhas e comparação de prompts.</p>
+<h2>Fundamentação conceitual</h2>
+<h3>1. O que significa avaliar uma aplicação</h3>
+<p>O desempenho de uma triagem depende da definição de verdade de referência, da distribuição das mensagens e do custo dos erros. Um <em>golden set</em> é um conjunto cuidadosamente anotado, com regras de rotulagem e critérios de resolução de discordâncias. Não basta gerar rótulos automaticamente e tratá-los como verdade. O conjunto usado para aperfeiçoar prompts não deve ser o único conjunto usado para afirmar desempenho final: múltiplas escolhas sobre os mesmos dados geram sobreajuste à avaliação.</p>
+<p>Para uma classe de interesse, a matriz de confusão contém verdadeiros positivos (<span class="math">\(\text{TP}\)</span>), falsos positivos (<span class="math">\(\text{FP}\)</span>), falsos negativos (<span class="math">\(\text{FN}\)</span>) e verdadeiros negativos (<span class="math">\(\text{TN}\)</span>). Essa matriz é definida sempre em relação a um rótulo positivo declarado.</p>
+<div class="math">$$
+\text{Precision}=\frac{\text{TP}}{\text{TP}+\text{FP}},\qquad
+\text{Recall}=\frac{\text{TP}}{\text{TP}+\text{FN}},
+$$</div>
+<div class="math">$$
+\text{Accuracy}=\frac{\text{TP}+\text{TN}}{\text{TP}+\text{FP}+\text{FN}+\text{TN}},\qquad
+F_1=\frac{2\text{Precision}\,\text{Recall}}{\text{Precision}+\text{Recall}}.
+$$</div>
+<p>Essas medidas não capturam sozinhas o custo empresarial dos erros.</p>
+<h3>2. Exemplo resolvido: prioridades de atendimento</h3>
+<p>Em 50 mensagens, admita <span class="math">\(\text{TP}=8\)</span>, <span class="math">\(\text{FP}=4\)</span>, <span class="math">\(\text{FN}=12\)</span> e <span class="math">\(\text{TN}=26\)</span>. Então <span class="math">\(\text{Precision}=8/12\approx0{,}667\)</span>, <span class="math">\(\text{Recall}=8/20=0{,}40\)</span> e <span class="math">\(\text{Accuracy}=34/50=0{,}68\)</span>. A aplicação deixa de identificar 60% das mensagens realmente urgentes, apesar da maioria das decisões estar correta. Um gestor que observa só a accuracy pode tomar uma decisão inadequada.</p>
+<p>Se o custo de uma falsa urgência for 1 e o custo de deixar de identificar uma urgência for 5, a perda total será <span class="math">\(L=1\text{FP}+5\text{FN}\)</span>. A escolha entre classificadores pode mudar quando muda a relação de custos. É necessário explicitar o critério <strong>antes</strong> de selecionar o melhor sistema.</p>
+<h3>3. Estabilidade e diagnóstico</h3>
+<p>O conjunto deve incluir classes raras, mensagens incompletas, negações e casos com múltiplos temas. Reportar apenas a média pode esconder falhas relevantes por subgrupo. Ao comparar versões, usar as mesmas entradas e controlar mudanças de taxonomia e pré-processamento. Para saídas estocásticas, replicar execuções e registrar variabilidade; uma única resposta não sustenta a afirmação de melhoria estável.</p>
+<p>Erros de sintaxe, de classificação e de recuperação de informação são falhas diferentes. O diagnóstico deve apontar onde o processo falhou, com casos concretos e possíveis correções. Na avaliação de rótulos humanos, a discordância entre anotadores pode revelar ambiguidade real, em vez de simples defeito do prompt.</p>
+<h2>Exemplo de discussão para resolução manual</h2>
+<p>&lt;div class="tcolorbox"&gt;</p>
+<p>Para oito mensagens, a classificação ’urgente’ apresenta <span class="math">\(\text{TP}=3\)</span>, <span class="math">\(\text{FP}=1\)</span>, <span class="math">\(\text{FN}=2\)</span> e <span class="math">\(\text{TN}=2\)</span>. Calcular <span class="math">\(\operatorname{Precision}=3/4=0{,}75\)</span>, <span class="math">\(\operatorname{Recall}=3/5=0{,}60\)</span> e <span class="math">\(\operatorname{Accuracy}=(3+2)/8=0{,}625\)</span>. Se a perda por falso negativo é cinco vezes a perda por falso positivo, o custo relativo é <span class="math">\(2\cdot5+1\cdot1=11\)</span>. Discutir como a política de encaminhamento mudaria se o custo de um falso negativo aumentasse.</p>
+<p>&lt;/div&gt;</p>
+<h2>Laboratório: aplicação e verificação</h2>
+<p><strong>Dados da aula:</strong> <a href="../../dados/aula/aula_04/previsoes-a.csv"><code>previsoes-a.csv</code></a>, <a href="../../dados/aula/aula_04/previsoes-b.csv"><code>previsoes-b.csv</code></a>, <a href="../../dados/aula/aula_04/rotulos.csv"><code>rotulos.csv</code></a>. <strong>Todos são didáticos/sintéticos.</strong></p>
+<h3>Problema de decisão e dados disponibilizados</h3>
+<p><strong>Situação.</strong> Uma central recebe reclamações potencialmente urgentes e deseja avaliar se a triagem automática reduz riscos sem sobrecarregar a equipe humana. Os erros têm consequências diferentes.</p>
+<p><strong>Pacote de dados.</strong> <code>rotulos.csv</code>: 60 solicitações fictícias com rótulo humano de urgência e justificativa; <code>previsoes-a.csv</code> e <code>previsoes-b.csv</code>: saídas de duas configurações congeladas, para comparar mesmo se o SDK não estiver disponível.</p>
+<h3>Laboratório em aula (60 minutos)</h3>
+<ol>
+<li><p>Definir positivo como “urgente” e construir uma matriz de confusão de seis casos exemplares à mão.</p>
+</li>
+<li><p>Pedir ao Codex um painel comparativo das duas configurações, com matriz, precision, recall, custo assimétrico e lista de discordâncias.</p>
+</li>
+<li><p>Inspecionar cinco falsos negativos e distinguir erro de referência, erro de leitura da mensagem e erro de regra.</p>
+</li>
+<li><p>Escolher uma configuração sob dois cenários de custo, justificando por que accuracy isolada é insuficiente.</p>
+</li>
+</ol>
+<h3>Especificação inicial por prompt</h3>
+<blockquote>
+<p><strong>Construa um avaliador local que receba rótulos humanos e duas tabelas de previsões fixas por ID, calcule as métricas e mostre casos de erro. Implemente também comparação do custo com FN cinco vezes mais caro que FP, sem exigir qualquer chamada de modelo.</strong></p>
+</blockquote>
+<h3>Critérios de aceitação</h3>
+<p>Matrizes somam 60 casos; IDs pareados sem duplicação; denominadores apresentados; casos de rótulos controversos sinalizados; custo calculado com a convenção declarada.</p>
+<h3>Articulação com as demais aulas</h3>
+<p>Os limites da classificação por linguagem motivam integrar funções confiáveis para cálculo e consulta a dados na Aula 5.</p>
+<h3>Roteiro de verificação com o Codex</h3>
+<ol>
+<li>Examine a base de referência e registre a origem, as colunas e a unidade de análise.</li>
+<li>Na <strong>interface gráfica do Codex</strong>, descreva a aplicação, as entradas, as saídas e os critérios de aceitação; solicite que o agente crie os arquivos.</li>
+<li>Peça ao Codex que execute os testes, mostre os resultados e explique qualquer falha encontrada. O aluno não escreve código nem usa terminal.</li>
+<li>Compare pelo menos um resultado com um cálculo ou verificação manual realizado em sala.</li>
+<li>Registre dois casos em que a aplicação deveria se abster, solicitar esclarecimento ou sinalizar uma limitação.</li>
+</ol>
+<p><strong>Material complementar:</strong> <a href="slides.pdf">slides da aula (PDF)</a> · <a href="slides.tex">fonte LaTeX</a> · <a href="exercicios.html">exercícios no papel</a> · <a href="casa.html">atividade para casa</a>.</p>
+<h2>Exercícios e preparação da prova</h2>
+<p>Os dez problemas desta aula estão reunidos no <a href="exercicios.html">caderno de exercícios</a>. Os alunos devem explicitar as contas e justificar as conclusões. A escrita manual de código não é parte das avaliações.</p>
+<h2>Verificação da aprendizagem</h2>
+<p>O quiz oficial de 15 minutos no início da aula cobre os conceitos da Aula 3 e a atividade correspondente, condicionada ao depósito no GitHub. As questões oficiais e o gabarito são reservados ao professor.</p>
+<p><a href="../../apoio/treino.html#aula-04">Questões formativas de treinamento</a> (não são as questões da avaliação oficial).</p>
+<h2>Referências para aprofundamento</h2>
+<p>Consulte a <a href="../../apoio/bibliografia.html">bibliografia da disciplina</a> e as fontes técnicas indicadas no material específico.</p>
+<h2>Simulação interativa</h2>
+<p><a href="../../assets/simuladores/index.html">Experimentar os parâmetros numéricos</a>. A simulação complementa, mas não substitui, os cálculos feitos em papel.</p>
+<footer class="footer">Insper · Paulo C. Marques F. · Materiais didáticos · Dados sintéticos quando indicado.</footer></article></div><script src="../../assets/js/gate.js"></script><script src="../../assets/js/quiz.js"></script></body></html>

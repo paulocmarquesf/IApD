@@ -1,0 +1,32 @@
+[
+  {
+    "text": "Ao calcular a volatilidade de uma carteira, o que não pode ser ignorado?",
+    "options": [
+      "O nome escolhido para a carteira",
+      "A correlação entre retornos dos ativos",
+      "O número de slides da apresentação",
+      "A ordem alfabética dos ativos"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Qual conceito corresponde à definição: “Retornos, covariâncias e otimização devem ser executados e verificados, não produzidos por fluência textual.”?",
+    "options": [
+      "Tool calling",
+      "Contratos de ferramenta",
+      "Cálculo determinístico",
+      "Rastreabilidade"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Qual atitude é consistente com uma análise verificável da aplicação desta aula?",
+    "options": [
+      "Registrar entradas, resultados e critérios de verificação",
+      "Avaliar apenas se a interface parece convincente",
+      "Desconsiderar os casos sem resposta",
+      "Considerar todo texto fluente automaticamente correto"
+    ],
+    "answer": 0
+  }
+]

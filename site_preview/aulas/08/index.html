@@ -1,0 +1,69 @@
+<!doctype html><html lang="pt-BR" data-root="../../" class="js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sistemas conversacionais (chatbots) — Inteligência Artificial para Decisão</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></head><body><header class="site-header"><a href="../../index.html"><img src="../../assets/images/insper-logo.png" alt="Insper"></a><div><b class="course-name">Inteligência Artificial para Decisão</b><small>Ciências Econômicas e Administração · 2027-1</small></div></header><div class="layout"><nav class="side" aria-label="Navegação do curso"><strong>Disciplina</strong><a href="../../index.html" >Início</a><a href="../../programa/index.html" >Programa</a><a href="../../programa/aulas.html" >Lista de aulas</a><a href="../../aulas/01/index.html" >01. Fundamentos dos Large Language Models</a><a href="../../aulas/02/index.html" >02. Embeddings e similaridade semântica</a><a href="../../aulas/03/index.html" >03. Engenharia de prompts e saídas estruturadas</a><a href="../../aulas/04/index.html" >04. Avaliação de aplicações com LLMs</a><a href="../../aulas/05/index.html" >05. Integração de ferramentas computacionais</a><a href="../../aulas/06/index.html" >06. Composição de aplicações com LLMs</a><a href="../../aulas/07/index.html" >07. Retrieval-Augmented Generation</a><a href="../../aulas/08/index.html" class="active" aria-current="page">08. Sistemas conversacionais (chatbots)</a><a href="../../aulas/09/index.html" >09. Avaliação da recuperação de informação</a><a href="../../aulas/10/index.html" >10. Avaliação experimental de aplicações de IA</a><a href="../../aulas/11/index.html" >11. Workflows e agentes de IA</a><a href="../../aulas/12/index.html" >12. Confiabilidade e segurança de agentes</a><a href="../../caderno/index.html" >Caderno de exercícios</a><a href="../../apoio/simuladores.html" >Simuladores</a><a href="../../casos/index.html" >Casos e dados</a><a href="../../avaliacoes/index.html" >Avaliações</a><a href="../../apoio/bibliografia.html" >Bibliografia</a><a href="../../apoio/codex.html" >Codex</a></nav><article class="page"><h1>Sistemas conversacionais (chatbots)</h1>
+<p>&lt;span class="eyebrow"&gt;Aula 08 · Finanças&lt;/span&gt;</p>
+<blockquote>
+<p><strong>Propósito:</strong> Como responder uma pergunta de acompanhamento sem perder a entidade e o período discutidos anteriormente?</p>
+</blockquote>
+<p><strong>Organização do encontro:</strong> 15 minutos de quiz inicial (aulas 2 a 12); 45 minutos de conceitos e exercícios; 60 minutos de laboratório. A Aula 1 reserva 60 minutos para conceitos e 60 para o laboratório, sem quiz prévio.</p>
+<p><strong>Objetivos:</strong> Projetar chatbots documentais com histórico, resolução de referências, recuperação contextual e abstenção fundamentada.</p>
+<h2>Fundamentação conceitual</h2>
+<h3>1. Conversa como estado</h3>
+<p>Um chatbot documental recebe uma sequência de turnos. A pergunta atual pode depender de referentes introduzidos anteriormente: «Qual é a taxa do Fundo A?» seguida de «E a liquidez dele?». A segunda pergunta não é autossuficiente. A consulta reescrita deve incorporar o fundo correto, a classe pertinente e a versão do documento, sem acrescentar informações que o usuário não deu.</p>
+<p>Podemos representar o estado conversacional por <span class="math">\(S_t\)</span> e a transformação de consulta por</p>
+<div class="math">$$
+q'_t=\operatorname{rewrite}(q_t,S_{t-1}).
+$$</div>
+<p>A consulta <span class="math">\(q'_t\)</span> é submetida ao retriever. A resposta deve permanecer vinculada aos trechos retornados e não apenas ao estado narrativo da conversa. O histórico ajuda a identificar a pergunta; ele não confirma dados financeiros.</p>
+<h3>2. Referência, ambiguidade e abstenção</h3>
+<p>Imagine que o diálogo alternou entre Fundos A e B e o usuário pergunta «Qual deles tem resgate mais rápido?». Aqui uma comparação é apropriada, mas pode exigir documentos e classes diferentes. Já «Qual o prazo dele?» após discutir duas classes sem especificação não possui referente inequívoco. O chatbot deve solicitar esclarecimento.</p>
+<p>O conteúdo deve distinguir taxa de administração, taxa de performance, cotização, liquidação e prazo de resgate. Uma resposta correta para uma classe pode ser incorreta para outra. O campo temporal também é essencial: regulamentos e lâminas são documentos versionados.</p>
+<h3>3. Fluxo de um chatbot RAG</h3>
+<p>A aplicação executa recepção da pergunta, atualização de estado, reformulação, recuperação, verificação documental, geração e exibição de fontes. Para cada pergunta, o laboratório deve permitir inspecionar <strong>qual consulta foi realmente recuperada</strong>. A falha pode nascer na resolução da referência, antes de qualquer busca.</p>
+<p>Um conjunto de testes deve conter turnos independentes, dependentes do histórico, mudanças explícitas de fundo, mudanças implícitas, perguntas sem documento suficiente e perguntas que exigem abstenção. A avaliação deve separar correção da consulta reescrita, recuperação de fontes e fundamentação da resposta final.</p>
+<h3>4. Documentação e responsabilidade</h3>
+<p>Os documentos didáticos de fundos de investimento serão fictícios, evitando confusão com produtos reais. A aplicação será um assistente de consulta a documentos, e não um consultor de investimentos. Ao usuário deverá ser mostrado o trecho e sua versão, inclusive quando o sistema não consegue responder. O Codex Python SDK poderá integrar a geração, sujeito à validação institucional; a recuperação deve funcionar independentemente do LLM.</p>
+<h2>Exemplo de discussão para resolução manual</h2>
+<p>&lt;div class="tcolorbox"&gt;</p>
+<p>Turno 1: "Qual é a taxa de administração do Fundo A no regulamento de março?". Turno 2: "E a liquidez dele?". O estudante deve reformular o segundo turno como "Qual é a regra de liquidez do Fundo A no documento de março?" e explicar por que buscar apenas "liquidez" no corpus pode recuperar o Fundo B. Um trecho do Fundo B que menciona D+1 é lexicalmente relevante, mas documentalmente incorreto para a pergunta.</p>
+<p>&lt;/div&gt;</p>
+<h2>Laboratório: aplicação e verificação</h2>
+<p><strong>Dados da aula:</strong> <a href="../../dados/aula/aula_08/delta.html"><code>delta.md</code></a>, <a href="../../dados/aula/aula_08/dialogos.csv"><code>dialogos.csv</code></a>, <a href="../../dados/aula/aula_08/horizonte.html"><code>horizonte.md</code></a>, <a href="../../dados/aula/aula_08/omega.html"><code>omega.md</code></a>. <strong>Todos são didáticos/sintéticos.</strong></p>
+<h3>Problema de decisão e dados disponibilizados</h3>
+<p><strong>Situação.</strong> Um assistente documental deve responder perguntas sucessivas sobre fundos de investimento, resolvendo pronomes, classes e datas, mas sem completar números não presentes nos documentos.</p>
+<p><strong>Pacote de dados.</strong> Documentos didáticos fictícios de três fundos de investimento (regulamento, lâmina e resumo de taxas), com versões e classes diferenciadas; <code>dialogos.csv</code> com seis conversas de dois a quatro turnos e perguntas ambíguas.</p>
+<h3>Laboratório em aula (60 minutos)</h3>
+<ol>
+<li><p>Reformular manualmente três perguntas dependentes do histórico, explicitando fundo, classe e data.</p>
+</li>
+<li><p>Pedir ao Codex interface gráfica de chatbot com histórico, reformulação da consulta, recuperação documental local e citações por resposta.</p>
+</li>
+<li><p>Inspecionar um diálogo em que “ele” se refere ao fundo anterior e outro que alterna dois fundos.</p>
+</li>
+<li><p>Forçar documento inexistente e versão desatualizada; verificar pedido de esclarecimento e abstenção.</p>
+</li>
+</ol>
+<h3>Especificação inicial por prompt</h3>
+<blockquote>
+<p><strong>Crie um chatbot local para documentos didáticos de três fundos de investimento. Preserve histórico e mostre a consulta reformulada, filtros de fundo/classe/data, trechos recuperados e citações. Respostas sem fonte devem declarar insuficiência; use o Codex SDK somente quando a integração estiver validada.</strong></p>
+</blockquote>
+<h3>Critérios de aceitação</h3>
+<p>Referentes corretos em diálogos com alternância de fundos; números citados na classe/data correspondente; pedido de esclarecimento para identidade incerta; consultas e fontes recuperadas observáveis.</p>
+<h3>Articulação com as demais aulas</h3>
+<p>A Aula 9 avalia quantitativamente o estágio de recuperação, independentemente da qualidade superficial do texto produzido pelo chatbot.</p>
+<h3>Roteiro de verificação com o Codex</h3>
+<ol>
+<li>Examine a base de referência e registre a origem, as colunas e a unidade de análise.</li>
+<li>Na <strong>interface gráfica do Codex</strong>, descreva a aplicação, as entradas, as saídas e os critérios de aceitação; solicite que o agente crie os arquivos.</li>
+<li>Peça ao Codex que execute os testes, mostre os resultados e explique qualquer falha encontrada. O aluno não escreve código nem usa terminal.</li>
+<li>Compare pelo menos um resultado com um cálculo ou verificação manual realizado em sala.</li>
+<li>Registre dois casos em que a aplicação deveria se abster, solicitar esclarecimento ou sinalizar uma limitação.</li>
+</ol>
+<p><strong>Material complementar:</strong> <a href="slides.pdf">slides da aula (PDF)</a> · <a href="slides.tex">fonte LaTeX</a> · <a href="exercicios.html">exercícios no papel</a> · <a href="casa.html">atividade para casa</a>.</p>
+<h2>Exercícios e preparação da prova</h2>
+<p>Os dez problemas desta aula estão reunidos no <a href="exercicios.html">caderno de exercícios</a>. Os alunos devem explicitar as contas e justificar as conclusões. A escrita manual de código não é parte das avaliações.</p>
+<h2>Verificação da aprendizagem</h2>
+<p>O quiz oficial de 15 minutos no início da aula cobre os conceitos da Aula 7 e a atividade correspondente, condicionada ao depósito no GitHub. As questões oficiais e o gabarito são reservados ao professor.</p>
+<p><a href="../../apoio/treino.html#aula-08">Questões formativas de treinamento</a> (não são as questões da avaliação oficial).</p>
+<h2>Referências para aprofundamento</h2>
+<p>Consulte a <a href="../../apoio/bibliografia.html">bibliografia da disciplina</a> e as fontes técnicas indicadas no material específico.</p>
+<p><strong>Nota sobre o corpus:</strong> os fundos, classes, taxas e documentos são fictícios. O objetivo é comparar versões e classes documentais em um ambiente reproduzível.</p>
+<footer class="footer">Insper · Paulo C. Marques F. · Materiais didáticos · Dados sintéticos quando indicado.</footer></article></div><script src="../../assets/js/gate.js"></script><script src="../../assets/js/quiz.js"></script></body></html>

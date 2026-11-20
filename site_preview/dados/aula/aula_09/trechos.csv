@@ -1,0 +1,21 @@
+trecho_id,documento,classe,texto
+T01,horizonte.md,A,"Fundo Horizonte: taxa de administração de 1,20% ao ano."
+T02,horizonte.md,A,Fundo Horizonte: prazo de cotização de resgate D+30.
+T03,horizonte.md,A,"Fundo Horizonte: fundo de ações, com referência ao IBOV."
+T04,horizonte.md,A,Fundo Horizonte: aplicação inicial de R$ 1.000.
+T05,delta.md,A,"Fundo Delta: taxa de administração 0,80% ao ano."
+T06,delta.md,A,Fundo Delta: prazo de cotização de resgate D+5.
+T07,delta.md,A,"Fundo Delta: política multimercado em renda fixa, câmbio e ações."
+T08,delta.md,A,Fundo Delta: aplicação inicial de R$ 500.
+T09,omega.md,A,"Fundo Ômega: taxa de administração 0,50% ao ano."
+T10,omega.md,A,Fundo Ômega: prazo de cotização de resgate D+1.
+T11,omega.md,A,Fundo Ômega: política concentrada em renda fixa.
+T12,omega.md,A,Fundo Ômega: aplicação inicial de R$ 100.
+T13,horizonte_classe_B.md,B,"Fundo Horizonte classe B: taxa de administração 0,95% ao ano."
+T14,horizonte_classe_B.md,B,Fundo Horizonte classe B: cotização de resgate D+25.
+T15,delta_classe_B.md,B,"Fundo Delta classe B: taxa 0,65% ao ano."
+T16,delta_classe_B.md,B,Fundo Delta classe B: cotização D+7.
+T17,omega_classe_B.md,B,"Fundo Ômega classe B: taxa 0,45% ao ano."
+T18,omega_classe_B.md,B,Fundo Ômega classe B: cotização D+2.
+T19,horizonte.md,A,Documentação sintética: rentabilidade passada não garante resultados futuros.
+T20,delta.md,A,Documentação sintética: rentabilidade passada não garante resultados futuros.

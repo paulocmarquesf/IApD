@@ -1,0 +1,67 @@
+<!doctype html><html lang="pt-BR" data-root="../../" class="js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Retrieval-Augmented Generation — Inteligência Artificial para Decisão</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></head><body><header class="site-header"><a href="../../index.html"><img src="../../assets/images/insper-logo.png" alt="Insper"></a><div><b class="course-name">Inteligência Artificial para Decisão</b><small>Ciências Econômicas e Administração · 2027-1</small></div></header><div class="layout"><nav class="side" aria-label="Navegação do curso"><strong>Disciplina</strong><a href="../../index.html" >Início</a><a href="../../programa/index.html" >Programa</a><a href="../../programa/aulas.html" >Lista de aulas</a><a href="../../aulas/01/index.html" >01. Fundamentos dos Large Language Models</a><a href="../../aulas/02/index.html" >02. Embeddings e similaridade semântica</a><a href="../../aulas/03/index.html" >03. Engenharia de prompts e saídas estruturadas</a><a href="../../aulas/04/index.html" >04. Avaliação de aplicações com LLMs</a><a href="../../aulas/05/index.html" >05. Integração de ferramentas computacionais</a><a href="../../aulas/06/index.html" >06. Composição de aplicações com LLMs</a><a href="../../aulas/07/index.html" class="active" aria-current="page">07. Retrieval-Augmented Generation</a><a href="../../aulas/08/index.html" >08. Sistemas conversacionais (chatbots)</a><a href="../../aulas/09/index.html" >09. Avaliação da recuperação de informação</a><a href="../../aulas/10/index.html" >10. Avaliação experimental de aplicações de IA</a><a href="../../aulas/11/index.html" >11. Workflows e agentes de IA</a><a href="../../aulas/12/index.html" >12. Confiabilidade e segurança de agentes</a><a href="../../caderno/index.html" >Caderno de exercícios</a><a href="../../apoio/simuladores.html" >Simuladores</a><a href="../../casos/index.html" >Casos e dados</a><a href="../../avaliacoes/index.html" >Avaliações</a><a href="../../apoio/bibliografia.html" >Bibliografia</a><a href="../../apoio/codex.html" >Codex</a></nav><article class="page"><h1>Retrieval-Augmented Generation</h1>
+<p>&lt;span class="eyebrow"&gt;Aula 07 · Macroeconomia&lt;/span&gt;</p>
+<blockquote>
+<p><strong>Propósito:</strong> Como uma aplicação identifica os trechos documentais que sustentam uma resposta?</p>
+</blockquote>
+<p><strong>Organização do encontro:</strong> 15 minutos de quiz inicial (aulas 2 a 12); 45 minutos de conceitos e exercícios; 60 minutos de laboratório. A Aula 1 reserva 60 minutos para conceitos e 60 para o laboratório, sem quiz prévio.</p>
+<p><strong>Objetivos:</strong> Compreender a arquitetura de RAG e separar erros de ingestão, recuperação e geração, com controle explícito de fontes e datas.</p>
+<h2>Fundamentação conceitual</h2>
+<h3>1. Recuperação antes da geração</h3>
+<p>Em <em>Retrieval-Augmented Generation</em> (RAG), a resposta é condicionada a trechos recuperados de um acervo. O mecanismo separa preparação do corpus, indexação, recuperação e geração. Essa distinção importa porque uma resposta pode ser incorreta por duas razões: a evidência não foi recuperada ou foi recuperada, mas o gerador não a utilizou adequadamente.</p>
+<p>A preparação define documentos, metadados, política de fragmentação (<em>chunking</em>) e possíveis sobreposições. Fragmentos curtos podem perder o referente de expressões como «essa decisão»; longos demais podem reduzir precisão e ocupar desnecessariamente o contexto. A qualidade não depende de maximizar indiscriminadamente o número de trechos.</p>
+<h3>2. Recuperação e top-k</h3>
+<p>Se um índice retorna trechos <span class="math">\(d_1,\ldots,d_m\)</span> ordenados por relevância, <em>top-k</em> conserva apenas os <span class="math">\(k\)</span> primeiros. Considere a ordem <span class="math">\(A,B,C,D\)</span> e suponha que apenas <span class="math">\(C\)</span> contém a evidência. Com <span class="math">\(k=2\)</span>, o gerador não recebe o trecho correto. Mesmo que escreva uma resposta plausível, ela não estará fundamentada pelo corpus fornecido.</p>
+<p>A recuperação pode ser lexical (termos coincidentes), densa (vetores de embeddings) ou híbrida. A melhor abordagem depende da estrutura dos documentos e das perguntas. Nomes, datas e números exatos são frequentemente úteis para busca lexical; paráfrases podem favorecer busca densa.</p>
+<h3>3. Citações e distinção entre texto e interpretação</h3>
+<p>Uma citação documental exige identificador, data ou versão e localização do trecho. Uma resposta sobre determinada reunião do Copom não pode ser sustentada apenas por trecho verdadeiro, porém extraído de reunião diferente. É necessário preservar a dimensão temporal.</p>
+<p>O sistema deve separar claramente (a) o que o documento afirma, (b) a síntese produzida pela aplicação e (c) interpretações adicionais do analista. Quando o acervo não responde à questão, a abstenção é um resultado legítimo. A saída não deve inventar falas nem atribuir ao Banco Central interpretações não presentes no documento.</p>
+<h3>4. Segurança documental e avaliação</h3>
+<p>Um texto recuperado pode conter instruções para o modelo. Essas instruções não têm a autoridade do prompt da aplicação. Deve-se tratar documentos como <strong>dados não confiáveis</strong> e testar tentativas de <em>prompt injection</em>. Para avaliar o retriever, criar perguntas com trechos relevantes identificados; para avaliar o gerador, conferir cada afirmação com a fonte correta.</p>
+<p>No laboratório serão usados documentos didáticos explicitamente fictícios, com registros de reunião e data. Uma extensão opcional substitui esse conjunto por atas oficiais do Banco Central, com proveniência e versões congeladas para reprodução.</p>
+<h2>Exemplo de discussão para resolução manual</h2>
+<p>&lt;div class="tcolorbox"&gt;</p>
+<p>Uma busca retorna quatro trechos com escores 0,87; 0,78; 0,61; 0,43. Com k=2, somente os dois primeiros entram no contexto da resposta. Se o trecho correto está na terceira posição, a recuperação falhou para k=2, mesmo que o modelo redija uma justificativa plausível. Compare um chunk muito curto, que perde o antecedente de "essa decisão", com outro longo, que inclui o parágrafo anterior. O estudante identifica o ponto de falha sem depender de software.</p>
+<p>&lt;/div&gt;</p>
+<h2>Laboratório: aplicação e verificação</h2>
+<p><strong>Dados da aula:</strong> <a href="../../dados/aula/aula_07/documento_didatico_1.html"><code>documento_didatico_1.md</code></a>, <a href="../../dados/aula/aula_07/documento_didatico_2.html"><code>documento_didatico_2.md</code></a>, <a href="../../dados/aula/aula_07/documento_didatico_3.html"><code>documento_didatico_3.md</code></a>, <a href="../../dados/aula/aula_07/perguntas.csv"><code>perguntas.csv</code></a>. <strong>Todos são didáticos/sintéticos.</strong></p>
+<h3>Problema de decisão e dados disponibilizados</h3>
+<p><strong>Situação.</strong> Um pesquisador precisa identificar os argumentos apresentados pelo Copom em reuniões distintas e recuperar trechos verificáveis, sem atribuir ao comitê interpretações produzidas pelo sistema.</p>
+<p><strong>Pacote de dados.</strong> Pacote didático de três documentos fictícios de reuniões monetárias, com <code>data</code>, <code>reuniao</code>, <code>url</code> e texto; <code>perguntas.csv</code> com 12 consultas e trechos relevantes identificados. Uma extensão opcional poderá utilizar atas oficiais do Banco Central, com proveniência e versões verificadas.</p>
+<h3>Laboratório em aula (60 minutos)</h3>
+<ol>
+<li><p>Escolher manualmente a evidência para duas perguntas e registrar reunião/data em cada citação.</p>
+</li>
+<li><p>Solicitar ao Codex extração, fragmentação, indexação local, recuperação top-k e resposta com citações por trecho.</p>
+</li>
+<li><p>Alterar k e tamanho dos fragmentos; observar uma pergunta cuja resposta desaparece do contexto e outra envolvendo reuniões diferentes.</p>
+</li>
+<li><p>Testar abstenção, referência temporal e tentativa de prompt injection dentro de trecho recuperado.</p>
+</li>
+</ol>
+<h3>Especificação inicial por prompt</h3>
+<blockquote>
+<p><strong>Construa um RAG local sobre os três documentos didáticos. Mostre por pergunta os trechos recuperados, reunião, data, localização e resposta fundamentada. Permita abstenção; se houver geração por LLM, use apenas o Codex Python SDK previamente validado; mantenha modo de inspeção de recuperação sem geração.</strong></p>
+</blockquote>
+<h3>Critérios de aceitação</h3>
+<p>Todas as citações apontam para trecho presente na ata correta; respostas sem evidência sinalizam insuficiência; versão de corpus e parâmetros de busca registrados; nenhuma inferência é apresentada como declaração literal do Banco Central.</p>
+<h3>Articulação com as demais aulas</h3>
+<p>A Aula 8 reutilizará a lógica de recuperação em um sistema no qual as perguntas dependem do histórico da conversa.</p>
+<h3>Roteiro de verificação com o Codex</h3>
+<ol>
+<li>Examine a base de referência e registre a origem, as colunas e a unidade de análise.</li>
+<li>Na <strong>interface gráfica do Codex</strong>, descreva a aplicação, as entradas, as saídas e os critérios de aceitação; solicite que o agente crie os arquivos.</li>
+<li>Peça ao Codex que execute os testes, mostre os resultados e explique qualquer falha encontrada. O aluno não escreve código nem usa terminal.</li>
+<li>Compare pelo menos um resultado com um cálculo ou verificação manual realizado em sala.</li>
+<li>Registre dois casos em que a aplicação deveria se abster, solicitar esclarecimento ou sinalizar uma limitação.</li>
+</ol>
+<p><strong>Material complementar:</strong> <a href="slides.pdf">slides da aula (PDF)</a> · <a href="slides.tex">fonte LaTeX</a> · <a href="exercicios.html">exercícios no papel</a> · <a href="casa.html">atividade para casa</a>.</p>
+<h2>Exercícios e preparação da prova</h2>
+<p>Os dez problemas desta aula estão reunidos no <a href="exercicios.html">caderno de exercícios</a>. Os alunos devem explicitar as contas e justificar as conclusões. A escrita manual de código não é parte das avaliações.</p>
+<h2>Verificação da aprendizagem</h2>
+<p>O quiz oficial de 15 minutos no início da aula cobre os conceitos da Aula 6 e a atividade correspondente, condicionada ao depósito no GitHub. As questões oficiais e o gabarito são reservados ao professor.</p>
+<p><a href="../../apoio/treino.html#aula-07">Questões formativas de treinamento</a> (não são as questões da avaliação oficial).</p>
+<h2>Referências para aprofundamento</h2>
+<p>Consulte a <a href="../../apoio/bibliografia.html">bibliografia da disciplina</a> e as fontes técnicas indicadas no material específico.</p>
+<h2>Simulação interativa</h2>
+<p><a href="../../assets/simuladores/index.html">Experimentar os parâmetros numéricos</a>. A simulação complementa, mas não substitui, os cálculos feitos em papel.</p>
+<footer class="footer">Insper · Paulo C. Marques F. · Materiais didáticos · Dados sintéticos quando indicado.</footer></article></div><script src="../../assets/js/gate.js"></script><script src="../../assets/js/quiz.js"></script></body></html>

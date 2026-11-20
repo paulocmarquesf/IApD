@@ -1,0 +1,153 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage[portuguese]{babel}
+\usepackage{fontspec,unicode-math}
+\setmainfont{Noto Sans}
+\setsansfont{Noto Sans}
+\setmathfont{STIX Math}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\definecolor{InsperRed}{HTML}{a01924}
+\definecolor{Ink}{HTML}{232529}
+\setbeamercolor{frametitle}{fg=Ink}
+\setbeamercolor{structure}{fg=InsperRed}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{InsperRed}$\bullet$}
+\setbeamertemplate{footline}{%
+  \hbox{\begin{beamercolorbox}[wd=.84\paperwidth,ht=2.7ex,dp=1.2ex,leftskip=.7cm]{normal text}\scriptsize Inteligência Artificial para Decisão · Insper · 2027-1\end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.16\paperwidth,ht=2.7ex,dp=1.2ex,rightskip=.7cm plus1fil]{normal text}\hfill\scriptsize\insertframenumber\, /\, \inserttotalframenumber\end{beamercolorbox}}}
+\setbeamersize{text margin left=12mm,text margin right=12mm}
+\begin{document}
+\begin{frame}[t]{}
+\vspace{14mm}\textcolor{InsperRed}{\bfseries AULA 06}\par\vspace{4mm}{\LARGE\bfseries Composição de aplicações com LLMs}\par\vspace{6mm}{\large Marketing Analítico}\par\vspace{12mm}{\color{gray}Paulo C. Marques F. · 2027-1}
+\end{frame}
+
+\begin{frame}[t]{Objetivos e verificação}
+\small
+\begin{itemize}
+\item Projetar fluxos compostos, identificar dependências entre ferramentas e distinguir informação observada, cálculo derivado e inferência do modelo.
+\item Resolver manualmente os exemplos do capítulo, identificando hipóteses e consequências.
+\item Especificar a aplicação no Codex gráfico e confrontar ao menos um resultado com evidências.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Organização do encontro}
+\small
+\begin{itemize}
+\item Apresentação dos fundamentos e resolução de problemas quantitativos no papel.
+\item Laboratório supervisionado e testes produzidos por prompts na interface gráfica do Codex, sem terminal.
+\item Atividade individual com dados diferentes e depósito no GitHub antes do quiz seguinte.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Aplicações como composição de operações}
+\small
+\begin{itemize}
+\item Uma aplicação composta transforma a saída de uma operação em entrada de outra.
+\item Se prepara avaliações, recupera textos semelhantes e combina indicadores comerciais, o resultado é , em que reúne preços e participações provenientes de uma base independente.
+\item A composição precisa respeitar dependências, tipos, unidades e proveniência; uma operação isolada correta não garante que o sistema completo esteja correto.
+\item Um grafo acíclico de tarefas torna explícitas as relações entre etapas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Aplicações como composição de operações — continuação}
+\small
+\begin{itemize}
+\item Para cada aresta, o aluno deve perguntar: ``Qual dado passou?
+\item Campos com mesma aparência mas sem mesmo significado não podem ser combinados automaticamente.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Proveniência e temporalidade}
+\small
+\begin{itemize}
+\item Um relatório sobre posicionamento pode reunir avaliações coletadas em determinado mês, preços vigentes em outra data e participação de mercado aferida em um período anual.
+\item Somar essas informações sem registrar suas datas cria uma aparência de precisão que não existe.
+\item Toda saída deve identificar de onde veio cada número, qual transformação o produziu e quais premissas são necessárias para interpretá-lo.
+\item Considere preços de R\textbackslash\{\} 150.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Proveniência e temporalidade — continuação}
+\small
+\begin{itemize}
+\item A diferença relativa a 150 é ; relativa a 120 é .
+\item Um assistente que afirma ``a marca A é 25\% mais barata que B'' escolheu a base errada se pretende medir desconto em relação a B.
+\item A noção de porcentagem exige denominador explícito.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Falhas de integração}
+\small
+\begin{itemize}
+\item Quatro erros merecem especial atenção: (i) ferramenta não executada; (ii) argumento incorreto ou de unidade incompatível; (iii) retorno correto atribuído à entidade errada; (iv) inferência não sustentada apresentada como…
+\item Um rastro de execução útil permite localizar essas falhas.
+\item A participação de mercado não pode ser estimada somente a partir da proporção de avaliações de determinada marca: o número de reviews depende de cobertura, propensão a avaliar e exposição.
+\item Comparar a percepção textual com participação já observada é legítimo; deduzir participação diretamente do volume de reviews, sem desenho amostral apropriado, não é.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Verificação de ponta a ponta}
+\small
+\begin{itemize}
+\item O laboratório deve produzir uma tabela final acompanhada de um registro de origens.
+\item Testes unitários verificam cada ferramenta; testes de integração verificam a correspondência correta entre marca, data e indicador.
+\item O aluno deverá fornecer pelo menos um exemplo em que cada componente funciona isoladamente, mas a associação final é incorreta.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Exercício para resolver no papel 1}
+\small
+\small\textbf{6.1 O desconto aparente}\par\vspace{4mm}A loja A oferece um produto a R\textbackslash\{\} 150 na mesma data. Calcule a diferença percentual tomando A como referência e tomando B como referência. Por que divulgar uma única porcentagem sem declarar a base pode enganar?
+\end{frame}
+
+\begin{frame}[t]{Exercício para resolver no papel 2}
+\small
+\small\textbf{6.2 Menção não é market share}\par\vspace{4mm}Em 80 avaliações, 48 mencionam `durabilidade''. Uma apresentação afirma: `A marca tem 60\% do mercado de durabilidade''. Calcule a proporção observada e explique precisamente a inferência inválida.
+\end{frame}
+
+\begin{frame}[t]{Laboratório e caso aplicado}
+\small
+\begin{itemize}
+\item Área de aplicação: Marketing Analítico.
+\item Mapear em papel quais conclusões cada fonte permite e quais não permite.
+\item Pedir ao Codex painel que una atributos mencionados, preços datados e participações somente quando o levantamento fornecer o denominador.
+\item Forçar um caso de dados conflitantes por data, unidade ou marca e verificar se o painel bloqueia comparação indevida.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Prompt de desenvolvimento — exemplo}
+\small
+\small\textbf{Instrução fornecida ao Codex:}\par\vspace{5mm}Amplie o painel de Marketing para combinar embeddings de avaliações com preços e dados explícitos de pesquisa de mercado. Exiba origem, data, denominadores e unidade de cada indicador; impeça inferir market share apenas de avaliações.
+\end{frame}
+
+\begin{frame}[t]{Critérios de aceitação e validação}
+\small
+\begin{itemize}
+\item Toda afirmação numérica tem fonte; comparações usam datas/unidades compatíveis; participação de mercado nunca é inferida de frequência de comentários; conflito gera alerta visível.
+\item Inspecionar argumentos, saídas e rastros das ferramentas quando houver chamadas externas.
+\item Comparar uma saída com a resolução manual do exemplo conceitual.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Atividade individual em casa}
+\small
+\begin{itemize}
+\item Conjunto inteiramente novo: avaliação de duas marcas fictícias de aspiradores, preços em duas datas e levantamento com 60 respostas de pesquisa sobre atributos.
+\item Resolver as questões de interpretação, com cálculos e evidência documental.
+\item Depositar no GitHub os arquivos solicitados; a entrega habilita o quiz, sem valer nota.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Preparação para a avaliação escrita}
+\small
+\begin{itemize}
+\item Exercícios do caderno: 6.1 O desconto aparente; 6.2 Menção não é market share; 6.3 Uma evidência com duas datas.
+\item Formalizar o raciocínio e interpretar resultados; não será exigida escrita manual de código.
+\item No quiz seguinte serão avaliados conceitos desta aula e da atividade feita em casa.
+\end{itemize}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,5 @@
+evento_id,pedido_id,tipo
+E1,A001,solicitacao_normal
+E2,A001,duplicada
+E3,A099,pedido_inexistente
+E4,A005,ferramenta_indisponivel

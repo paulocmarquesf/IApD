@@ -1,0 +1,31 @@
+message_id,pedido_id,texto,categoria_referencia
+C10000,P1200,Cobrança duplicada no pedido P1200.,cobranca
+C10001,P1201,Quero atualizar meu cadastro; não tenho o pedido P1201.,outros
+C10002,P1202,O pedido P1202 chegou rasgado; solicito troca.,troca
+C10003,P1203,A transportadora atrasou o pedido P1203.,entrega
+C10004,P1204,Meu pedido P1204 ainda não chegou.,entrega
+C10005,P1205,Recebi a peça errada do pedido P1205 e quero trocar.,troca
+C10006,P1206,Cobrança duplicada no pedido P1206.,cobranca
+C10007,P1207,Quero atualizar meu cadastro; não tenho o pedido P1207.,outros
+C10008,P1208,O pedido P1208 chegou rasgado; solicito troca.,troca
+C10009,P1209,A transportadora atrasou o pedido P1209.,entrega
+C10010,P1210,Meu pedido P1210 ainda não chegou.,entrega
+C10011,P1211,Recebi a peça errada do pedido P1211 e quero trocar.,troca
+C10012,P1212,Cobrança duplicada no pedido P1212.,cobranca
+C10013,P1213,Quero atualizar meu cadastro; não tenho o pedido P1213.,outros
+C10014,P1214,O pedido P1214 chegou rasgado; solicito troca.,troca
+C10015,P1215,A transportadora atrasou o pedido P1215.,entrega
+C10016,P1216,Meu pedido P1216 ainda não chegou.,entrega
+C10017,P1217,Recebi a peça errada do pedido P1217 e quero trocar.,troca
+C10018,P1218,Cobrança duplicada no pedido P1218.,cobranca
+C10019,P1219,Quero atualizar meu cadastro; não tenho o pedido P1219.,outros
+C10020,P1220,O pedido P1220 chegou rasgado; solicito troca.,troca
+C10021,P1221,A transportadora atrasou o pedido P1221.,entrega
+C10022,P1222,Meu pedido P1222 ainda não chegou.,entrega
+C10023,P1223,Recebi a peça errada do pedido P1223 e quero trocar.,troca
+C10024,P1224,Cobrança duplicada no pedido P1224.,cobranca
+C10025,P1225,Quero atualizar meu cadastro; não tenho o pedido P1225.,outros
+C10026,P1226,O pedido P1226 chegou rasgado; solicito troca.,troca
+C10027,P1227,A transportadora atrasou o pedido P1227.,entrega
+C10028,P1228,Meu pedido P1228 ainda não chegou.,entrega
+C10029,P1229,Recebi a peça errada do pedido P1229 e quero trocar.,troca

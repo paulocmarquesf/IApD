@@ -1,0 +1,41 @@
+id,mensagem,categoria_referencia,resultado_esperado
+P001,Onde está o pedido?,entrega,citar_regra
+P002,Veio quebrado e quero trocar.,troca,citar_regra
+P003,Fui cobrado duas vezes.,cobranca,citar_regra
+P004,Como atualizo meus dados?,outros,esclarecer
+P005,Onde está o pedido?,entrega,citar_regra
+P006,Veio quebrado e quero trocar.,troca,citar_regra
+P007,Fui cobrado duas vezes.,cobranca,citar_regra
+P008,Como atualizo meus dados?,outros,esclarecer
+P009,Onde está o pedido?,entrega,citar_regra
+P010,Veio quebrado e quero trocar.,troca,citar_regra
+P011,Fui cobrado duas vezes.,cobranca,citar_regra
+P012,Como atualizo meus dados?,outros,esclarecer
+P013,Onde está o pedido?,entrega,citar_regra
+P014,Veio quebrado e quero trocar.,troca,citar_regra
+P015,Fui cobrado duas vezes.,cobranca,citar_regra
+P016,Como atualizo meus dados?,outros,esclarecer
+P017,Onde está o pedido?,entrega,citar_regra
+P018,Veio quebrado e quero trocar.,troca,citar_regra
+P019,Fui cobrado duas vezes.,cobranca,citar_regra
+P020,Como atualizo meus dados?,outros,esclarecer
+P021,Onde está o pedido?,entrega,citar_regra
+P022,Veio quebrado e quero trocar.,troca,citar_regra
+P023,Fui cobrado duas vezes.,cobranca,citar_regra
+P024,Como atualizo meus dados?,outros,esclarecer
+P025,Onde está o pedido?,entrega,citar_regra
+P026,Veio quebrado e quero trocar.,troca,citar_regra
+P027,Fui cobrado duas vezes.,cobranca,citar_regra
+P028,Como atualizo meus dados?,outros,esclarecer
+P029,Onde está o pedido?,entrega,citar_regra
+P030,Veio quebrado e quero trocar.,troca,citar_regra
+P031,Fui cobrado duas vezes.,cobranca,citar_regra
+P032,Como atualizo meus dados?,outros,esclarecer
+P033,Onde está o pedido?,entrega,citar_regra
+P034,Veio quebrado e quero trocar.,troca,citar_regra
+P035,Fui cobrado duas vezes.,cobranca,citar_regra
+P036,Como atualizo meus dados?,outros,esclarecer
+P037,Onde está o pedido?,entrega,citar_regra
+P038,Veio quebrado e quero trocar.,troca,citar_regra
+P039,Fui cobrado duas vezes.,cobranca,citar_regra
+P040,Como atualizo meus dados?,outros,esclarecer

@@ -1,0 +1,4 @@
+parametro,valor,unidade
+taxa_livre_risco,0.06,a.a.
+short_selling,0,boolean
+soma_pesos,1,proporcao

@@ -1,0 +1,13 @@
+id,consulta,trecho_relevante,documento_relevante
+Q01,Qual reunião discutiu expectativas acima da meta?,paragrafo_1,documento_didatico_1.md
+Q02,Que documento faz referência à moderação da atividade?,paragrafo_1,documento_didatico_2.md
+Q03,Em qual encontro o preço dos serviços foi citado?,paragrafo_1,documento_didatico_3.md
+Q04,Foi determinada uma redução da taxa?,,
+Q05,Qual a data do documento sobre atividade?,paragrafo_1,documento_didatico_2.md
+Q06,Houve discussão de horizontes da política?,paragrafo_1,documento_didatico_1.md
+Q07,Qual texto cita riscos de serviços?,paragrafo_1,documento_didatico_3.md
+Q08,Há menção a cenário cambial?,,
+Q09,Em qual reunião se discutiu a demanda?,paragrafo_1,documento_didatico_2.md
+Q10,A decisão foi de elevar a taxa?,,
+Q11,Que reunião está associada a expectativas?,paragrafo_1,documento_didatico_1.md
+Q12,Que documento diz não haver riscos?,,

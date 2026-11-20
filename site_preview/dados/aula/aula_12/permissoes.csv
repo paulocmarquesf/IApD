@@ -1,0 +1,4 @@
+papel,acao,limite,aprovacao_exigida
+agente,consultar_pedido,0,0
+agente,propor_estorno,0,0
+simulador_autorizado,efetuar_estorno,250,1

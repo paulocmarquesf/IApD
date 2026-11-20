@@ -1,0 +1,16 @@
+pedido_id,dias_desde_entrega,status,motivo
+X001,0,nao_encontrado,arrependimento
+X002,1,entregue,defeito
+X003,2,entregue,sem_dados
+X004,3,entregue,arrependimento
+X005,4,entregue,defeito
+X006,5,entregue,sem_dados
+X007,6,nao_encontrado,arrependimento
+X008,7,entregue,defeito
+X009,8,entregue,sem_dados
+X010,9,entregue,arrependimento
+X011,10,entregue,defeito
+X012,0,entregue,sem_dados
+X013,1,nao_encontrado,arrependimento
+X014,2,entregue,defeito
+X015,3,entregue,sem_dados

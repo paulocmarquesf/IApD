@@ -1,0 +1,32 @@
+[
+  {
+    "text": "Quando uma segmentação de consumidores é defensável?",
+    "options": [
+      "Quando qualquer cluster de frases parece coerente",
+      "Quando cada frase recebe a mesma nota",
+      "Quando a análise dispõe de unidades e dados por consumidor",
+      "Quando o mapa 2D exibe exatamente três grupos"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Qual conceito corresponde à definição: “Agrupar mensagens não equivale a segmentar pessoas.”?",
+    "options": [
+      "Embeddings",
+      "Similaridade cosseno",
+      "Projeção bidimensional",
+      "Unidade de análise"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Qual atitude é consistente com uma análise verificável da aplicação desta aula?",
+    "options": [
+      "Registrar entradas, resultados e critérios de verificação",
+      "Avaliar apenas se a interface parece convincente",
+      "Desconsiderar os casos sem resposta",
+      "Considerar todo texto fluente automaticamente correto"
+    ],
+    "answer": 0
+  }
+]

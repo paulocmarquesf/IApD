@@ -1,0 +1,63 @@
+<!doctype html><html lang="pt-BR" data-root="../../" class="js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Avaliação experimental de aplicações de IA — Inteligência Artificial para Decisão</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></head><body><header class="site-header"><a href="../../index.html"><img src="../../assets/images/insper-logo.png" alt="Insper"></a><div><b class="course-name">Inteligência Artificial para Decisão</b><small>Ciências Econômicas e Administração · 2027-1</small></div></header><div class="layout"><nav class="side" aria-label="Navegação do curso"><strong>Disciplina</strong><a href="../../index.html" >Início</a><a href="../../programa/index.html" >Programa</a><a href="../../programa/aulas.html" >Lista de aulas</a><a href="../../aulas/01/index.html" >01. Fundamentos dos Large Language Models</a><a href="../../aulas/02/index.html" >02. Embeddings e similaridade semântica</a><a href="../../aulas/03/index.html" >03. Engenharia de prompts e saídas estruturadas</a><a href="../../aulas/04/index.html" >04. Avaliação de aplicações com LLMs</a><a href="../../aulas/05/index.html" >05. Integração de ferramentas computacionais</a><a href="../../aulas/06/index.html" >06. Composição de aplicações com LLMs</a><a href="../../aulas/07/index.html" >07. Retrieval-Augmented Generation</a><a href="../../aulas/08/index.html" >08. Sistemas conversacionais (chatbots)</a><a href="../../aulas/09/index.html" >09. Avaliação da recuperação de informação</a><a href="../../aulas/10/index.html" class="active" aria-current="page">10. Avaliação experimental de aplicações de IA</a><a href="../../aulas/11/index.html" >11. Workflows e agentes de IA</a><a href="../../aulas/12/index.html" >12. Confiabilidade e segurança de agentes</a><a href="../../caderno/index.html" >Caderno de exercícios</a><a href="../../apoio/simuladores.html" >Simuladores</a><a href="../../casos/index.html" >Casos e dados</a><a href="../../avaliacoes/index.html" >Avaliações</a><a href="../../apoio/bibliografia.html" >Bibliografia</a><a href="../../apoio/codex.html" >Codex</a></nav><article class="page"><h1>Avaliação experimental de aplicações de IA</h1>
+<p>&lt;span class="eyebrow"&gt;Aula 10 · Operações empresariais&lt;/span&gt;</p>
+<blockquote>
+<p><strong>Propósito:</strong> Uma mudança realmente melhorou o sistema, ou apenas produziu exemplos mais convincentes?</p>
+</blockquote>
+<p><strong>Organização do encontro:</strong> 15 minutos de quiz inicial (aulas 2 a 12); 45 minutos de conceitos e exercícios; 60 minutos de laboratório. A Aula 1 reserva 60 minutos para conceitos e 60 para o laboratório, sem quiz prévio.</p>
+<p><strong>Objetivos:</strong> Planejar comparações controladas, registrar ganhos e regressões, e avaliar respostas fundamentadas, custo e latência.</p>
+<h2>Fundamentação conceitual</h2>
+<h3>1. Comparações controladas</h3>
+<p>Melhorar uma aplicação exige definir o que será mantido constante, o que será modificado e qual métrica representará o objetivo. Uma avaliação antes/depois usando conjuntos de teste diferentes não identifica o efeito da mudança. O desenho mínimo usa uma configuração de referência (<em>baseline</em>) e uma alternativa, ambas aplicadas às mesmas entradas.</p>
+<p>Para uma métrica <span class="math">\(m\)</span> calculada em <span class="math">\(n\)</span> exemplos, escrevemos a diferença emparelhada <span class="math">\(\Delta=m_B-m_A\)</span>. Ao comparar resultados individuais, o vetor <span class="math">\(d_i=s_i(B)-s_i(A)\)</span> ajuda a examinar casos em que a nova configuração melhorou ou piorou. Uma média positiva pode esconder perdas graves em perguntas de risco elevado.</p>
+<h3>2. Separação de desenvolvimento e teste</h3>
+<p>É inadequado testar dezenas de prompts no mesmo conjunto e apresentar o maior escore como resultado independente: a escolha foi feita usando o teste. O desenho deve ter casos para especificação, casos para desenvolvimento e um conjunto final reservado. O mesmo cuidado se aplica à seleção de tamanho de chunk, top-k e limiares.</p>
+<p>Um avaliador por LLM (<em>LLM-as-a-Judge</em>) pode atribuir notas ou comparar respostas, mas sua saída é uma medição potencialmente enviesada e variável. Devemos registrar o critério, fornecer evidência aos avaliadores, analisar discordâncias e manter casos de revisão humana. O juiz não deve ser a única fonte do gabarito.</p>
+<h3>3. Resultados e trade-offs</h3>
+<p>Uma versão que passa de 80% para 84% de acerto melhora quatro pontos percentuais, não quatro por cento relativos: a melhoria relativa é <span class="math">\((0{,}84-0{,}80)/0{,}80=5\%\)</span>. A clareza sobre denominadores é essencial. Em sistemas reais, desempenho também envolve tempo de resposta, custo de execução, taxa de abstenção e consumo de contexto. Não é correto comparar apenas qualidade sem considerar viabilidade operacional.</p>
+<h3>4. Diagnóstico por etapas</h3>
+<p>Para um RAG de atendimento, se a política correta não foi recuperada, testar o índice e a consulta; se foi recuperada mas a resposta contradiz a política, investigar geração e instruções; se a resposta está correta mas viola exigência de aprovação, investigar o workflow. O experimento deve registrar <em>qual etapa mudou</em> e <em>qual etapa falhou</em>. Assim, a aula transforma a ideia vaga de «melhorar o chatbot» em um procedimento de avaliação reprodutível.</p>
+<h2>Exemplo de discussão para resolução manual</h2>
+<p>&lt;div class="tcolorbox"&gt;</p>
+<p>Em 20 solicitações, a baseline resolve corretamente 14 e a variante resolve 17. A taxa passa de 70% a 85%, ganho de 15 pontos percentuais. Se a variante corrige cinco casos antes errados e piora dois casos antes corretos, o ganho líquido é três. O estudante deve listar os dois casos de regressão, explicar por que só a diferença agregada é insuficiente e propor um critério que torne inaceitável determinada regressão de segurança.</p>
+<p>&lt;/div&gt;</p>
+<h2>Laboratório: aplicação e verificação</h2>
+<p><strong>Dados da aula:</strong> <a href="../../dados/aula/aula_10/casos.csv"><code>casos.csv</code></a>, <a href="../../dados/aula/aula_10/politicas.html"><code>politicas.md</code></a>, <a href="../../dados/aula/aula_10/previsoes_A.csv"><code>previsoes_A.csv</code></a>, <a href="../../dados/aula/aula_10/previsoes_B.csv"><code>previsoes_B.csv</code></a>. <strong>Todos são didáticos/sintéticos.</strong></p>
+<h3>Problema de decisão e dados disponibilizados</h3>
+<p><strong>Situação.</strong> Uma equipe quer saber se acrescentar recuperação de políticas ao classificador de atendimento melhora a fundamentação sem introduzir regressões ou latência excessiva.</p>
+<p><strong>Pacote de dados.</strong> Versão docente limpa da triagem; <code>politicas.md</code> com regras fictícias datadas; <code>casos.csv</code> com 40 solicitações e rótulos. Previsões congeladas das configurações A (sem RAG) e B (com RAG) garantem comparação sem depender de novas chamadas de LLM.</p>
+<h3>Laboratório em aula (60 minutos)</h3>
+<ol>
+<li><p>Definir previamente desfecho primário, rubrica de citação e limite operacional de latência.</p>
+</li>
+<li><p>Solicitar ao Codex comparação pareada, matriz de transições acerto–erro e relatórios de melhorias/regressões por ID.</p>
+</li>
+<li><p>Inspecionar casos de documento desatualizado, regra de exceção e afirmação elegante sem evidência.</p>
+</li>
+<li><p>Concluir se a mudança deve ser adotada, diferenciando ganho médio e risco de erro raro e grave.</p>
+</li>
+</ol>
+<h3>Especificação inicial por prompt</h3>
+<blockquote>
+<p><strong>Compare duas configurações de triagem sobre os mesmos 40 casos. Calcule métricas pareadas, melhorias, regressões, fundamentação e tempos registrados, com relatórios por ID. Use previsões congeladas para que o experimento funcione sem chamada de modelo; não altere simultaneamente os dados.</strong></p>
+</blockquote>
+<h3>Critérios de aceitação</h3>
+<p>Mesmos IDs e rótulos nas duas condições; regressões identificadas individualmente; latência descrita por mediana e quantis, se fornecidos; nenhuma inferência causal atribuída a mudanças múltiplas.</p>
+<h3>Articulação com as demais aulas</h3>
+<p>O sistema de atendimento deixa de apenas recomendar respostas e passa a executar um fluxo operacional explicitamente modelado nas Aulas 11 e 12.</p>
+<h3>Roteiro de verificação com o Codex</h3>
+<ol>
+<li>Examine a base de referência e registre a origem, as colunas e a unidade de análise.</li>
+<li>Na <strong>interface gráfica do Codex</strong>, descreva a aplicação, as entradas, as saídas e os critérios de aceitação; solicite que o agente crie os arquivos.</li>
+<li>Peça ao Codex que execute os testes, mostre os resultados e explique qualquer falha encontrada. O aluno não escreve código nem usa terminal.</li>
+<li>Compare pelo menos um resultado com um cálculo ou verificação manual realizado em sala.</li>
+<li>Registre dois casos em que a aplicação deveria se abster, solicitar esclarecimento ou sinalizar uma limitação.</li>
+</ol>
+<p><strong>Material complementar:</strong> <a href="slides.pdf">slides da aula (PDF)</a> · <a href="slides.tex">fonte LaTeX</a> · <a href="exercicios.html">exercícios no papel</a> · <a href="casa.html">atividade para casa</a>.</p>
+<h2>Exercícios e preparação da prova</h2>
+<p>Os dez problemas desta aula estão reunidos no <a href="exercicios.html">caderno de exercícios</a>. Os alunos devem explicitar as contas e justificar as conclusões. A escrita manual de código não é parte das avaliações.</p>
+<h2>Verificação da aprendizagem</h2>
+<p>O quiz oficial de 15 minutos no início da aula cobre os conceitos da Aula 9 e a atividade correspondente, condicionada ao depósito no GitHub. As questões oficiais e o gabarito são reservados ao professor.</p>
+<p><a href="../../apoio/treino.html#aula-10">Questões formativas de treinamento</a> (não são as questões da avaliação oficial).</p>
+<h2>Referências para aprofundamento</h2>
+<p>Consulte a <a href="../../apoio/bibliografia.html">bibliografia da disciplina</a> e as fontes técnicas indicadas no material específico.</p>
+<footer class="footer">Insper · Paulo C. Marques F. · Materiais didáticos · Dados sintéticos quando indicado.</footer></article></div><script src="../../assets/js/gate.js"></script><script src="../../assets/js/quiz.js"></script></body></html>

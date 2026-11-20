@@ -1,0 +1,32 @@
+[
+  {
+    "text": "Em uma comparação pareada, por que registrar regressões individuais?",
+    "options": [
+      "Porque sempre anulam todos os ganhos",
+      "Porque podem ser críticas apesar da melhoria média",
+      "Porque dispensam o golden set",
+      "Porque reduzem automaticamente a latência"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Qual conceito corresponde à definição: “Qualidade, custo e tempo de resposta são dimensões distintas; a escolha depende da aplicação.”?",
+    "options": [
+      "Baseline e hipótese",
+      "Comparação pareada",
+      "LLM-as-a-Judge",
+      "Trade-offs"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Qual atitude é consistente com uma análise verificável da aplicação desta aula?",
+    "options": [
+      "Registrar entradas, resultados e critérios de verificação",
+      "Avaliar apenas se a interface parece convincente",
+      "Desconsiderar os casos sem resposta",
+      "Considerar todo texto fluente automaticamente correto"
+    ],
+    "answer": 0
+  }
+]

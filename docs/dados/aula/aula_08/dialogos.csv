@@ -1,0 +1,13 @@
+dialogo,turno,pergunta,tipo
+D01,1,Qual a taxa de administração do Fundo Horizonte?,independente
+D01,2,E a liquidez dele?,referente
+D02,1,Compare a taxa do Delta e do Ômega.,independente
+D02,2,Qual deles tem menor custo?,referente
+D03,1,Resuma a política do Horizonte.,independente
+D03,2,Qual é a taxa de performance dele?,referente
+D04,1,Qual o prazo de resgate do Delta?,independente
+D04,2,E a cotização?,referente
+D05,1,Qual a regra da classe A do Ômega?,independente
+D05,2,E a da classe B?,referente
+D06,1,O Fundo Delta permite resgate imediato?,independente
+D06,2,Qual documento comprova essa informação?,referente

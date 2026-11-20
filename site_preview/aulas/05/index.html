@@ -1,0 +1,72 @@
+<!doctype html><html lang="pt-BR" data-root="../../" class="js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Integração de ferramentas computacionais — Inteligência Artificial para Decisão</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></head><body><header class="site-header"><a href="../../index.html"><img src="../../assets/images/insper-logo.png" alt="Insper"></a><div><b class="course-name">Inteligência Artificial para Decisão</b><small>Ciências Econômicas e Administração · 2027-1</small></div></header><div class="layout"><nav class="side" aria-label="Navegação do curso"><strong>Disciplina</strong><a href="../../index.html" >Início</a><a href="../../programa/index.html" >Programa</a><a href="../../programa/aulas.html" >Lista de aulas</a><a href="../../aulas/01/index.html" >01. Fundamentos dos Large Language Models</a><a href="../../aulas/02/index.html" >02. Embeddings e similaridade semântica</a><a href="../../aulas/03/index.html" >03. Engenharia de prompts e saídas estruturadas</a><a href="../../aulas/04/index.html" >04. Avaliação de aplicações com LLMs</a><a href="../../aulas/05/index.html" class="active" aria-current="page">05. Integração de ferramentas computacionais</a><a href="../../aulas/06/index.html" >06. Composição de aplicações com LLMs</a><a href="../../aulas/07/index.html" >07. Retrieval-Augmented Generation</a><a href="../../aulas/08/index.html" >08. Sistemas conversacionais (chatbots)</a><a href="../../aulas/09/index.html" >09. Avaliação da recuperação de informação</a><a href="../../aulas/10/index.html" >10. Avaliação experimental de aplicações de IA</a><a href="../../aulas/11/index.html" >11. Workflows e agentes de IA</a><a href="../../aulas/12/index.html" >12. Confiabilidade e segurança de agentes</a><a href="../../caderno/index.html" >Caderno de exercícios</a><a href="../../apoio/simuladores.html" >Simuladores</a><a href="../../casos/index.html" >Casos e dados</a><a href="../../avaliacoes/index.html" >Avaliações</a><a href="../../apoio/bibliografia.html" >Bibliografia</a><a href="../../apoio/codex.html" >Codex</a></nav><article class="page"><h1>Integração de ferramentas computacionais</h1>
+<p>&lt;span class="eyebrow"&gt;Aula 05 · Finanças&lt;/span&gt;</p>
+<blockquote>
+<p><strong>Propósito:</strong> Que operações um assistente deve delegar a ferramentas em vez de responder por aproximação linguística?</p>
+</blockquote>
+<p><strong>Organização do encontro:</strong> 15 minutos de quiz inicial (aulas 2 a 12); 45 minutos de conceitos e exercícios; 60 minutos de laboratório. A Aula 1 reserva 60 minutos para conceitos e 60 para o laboratório, sem quiz prévio.</p>
+<p><strong>Objetivos:</strong> Explicar o ciclo de tool calling, reconhecer esquemas e argumentos de ferramentas e avaliar cálculos financeiros obtidos por execução determinística.</p>
+<h2>Fundamentação conceitual</h2>
+<h3>1. Modelo de linguagem e ferramenta determinística</h3>
+<p>Um LLM pode escolher uma ferramenta e preparar seus argumentos, mas <strong>não é a ferramenta</strong>. O processo pode ser representado por quatro etapas: identificação da necessidade, preparação de parâmetros, execução verificável e comunicação do resultado. O rastro deve conter entrada, nome da função, argumentos, retorno e interpretação. Uma frase como «calculei a covariância» sem registro da chamada ou da operação não demonstra que ela foi executada.</p>
+<p>Um <em>tool schema</em> especifica tipos e parâmetros. A validade da chamada é diferente da correção dos argumentos. Se o período solicitado é mensal, uma função que recebe preços diários requer uma decisão explícita sobre agregação, calendário e tratamento de dados faltantes.</p>
+<h3>2. Retorno e risco</h3>
+<p>Para preços ajustados <span class="math">\(P_{t-1},P_t\)</span>, o retorno simples é</p>
+<div class="math">$$
+r_t=\frac{P_t-P_{t-1}}{P_{t-1}}.
+$$</div>
+<p>Retornos simples se compõem multiplicativamente: <span class="math">\(1+R=\prod_t(1+r_t)\)</span>. Assim, um aumento de 5% seguido de uma queda de 2% produz <span class="math">\((1{,}05)(0{,}98)-1=2{,}9\%\)</span>, e não 3%. Os dados de preços e os ajustes por proventos precisam ser definidos antes de calcular retornos.</p>
+<p>Para dois ativos com pesos <span class="math">\(w_A,w_B\)</span> e covariância <span class="math">\(\sigma_{AB}\)</span>, a variância da carteira é</p>
+<div class="math">$$
+\sigma_p^2=w_A^2\sigma_A^2+w_B^2\sigma_B^2+2w_Aw_B\sigma_{AB},\quad
+\sigma_{AB}=\rho_{AB}\sigma_A\sigma_B.
+$$</div>
+<p>Se <span class="math">\(w_A=0{,}6\)</span>, <span class="math">\(w_B=0{,}4\)</span>, <span class="math">\(\sigma_A=20\%\)</span>, <span class="math">\(\sigma_B=10\%\)</span> e <span class="math">\(\rho_{AB}=0{,}25\)</span>, a variância é <span class="math">\(0{,}0184\)</span> e a volatilidade é aproximadamente <span class="math">\(13{,}565\%\)</span>. Não se deve substituir a variância da carteira pela média ponderada das volatilidades.</p>
+<p>O índice de Sharpe, <span class="math">\(S=(\mathbb E[R_p]-r_f)/\sigma_p\)</span>, exige que retorno, taxa livre de risco e volatilidade estejam na <strong>mesma frequência temporal</strong>.</p>
+<h3>3. Fronteira eficiente e limites de interpretação</h3>
+<p>O problema de Markowitz pode ser escrito como <span class="math">\(\min_w w^\top\Sigma w\)</span> sujeito a <span class="math">\(\mathbf1^\top w=1\)</span> e <span class="math">\(\mu^\top w\ge r_0\)</span>, acrescido das restrições de investimento aplicáveis. O Codex pode gerar toda a rotina de preparação, otimização e visualização, mas o aluno deve verificar as premissas, a viabilidade das restrições e as unidades.</p>
+<p>A atividade é metodológica, não uma recomendação de investimento. Dados sintéticos permitem confrontar os resultados com cálculos de referência e examinar sensibilidade à correlação.</p>
+<h2>Exemplo de discussão para resolução manual</h2>
+<p>&lt;div class="tcolorbox"&gt;</p>
+<p>Duas ações têm retornos esperados de <span class="math">\(10\%\)</span> e <span class="math">\(5\%\)</span>, volatilidades de <span class="math">\(20\%\)</span> e <span class="math">\(10\%\)</span>, e correlação de <span class="math">\(0{,}25\)</span>. Para pesos <span class="math">\(0{,}6\)</span> e <span class="math">\(0{,}4\)</span>, obter <span class="math">\(\mathbb E[r_p]=0{,}08\)</span>, <span class="math">\(\operatorname{Var}(r_p)=0{,}0184\)</span> e <span class="math">\(\sigma_p\approx13{,}56\%\)</span>. Para taxa livre de risco de <span class="math">\(2\%\)</span>, o índice de Sharpe é aproximadamente <span class="math">\(0{,}442\)</span>. Identificar quais grandezas vêm dos dados e qual função calcula cada resultado.</p>
+<p>&lt;/div&gt;</p>
+<h2>Laboratório: aplicação e verificação</h2>
+<p><strong>Dados da aula:</strong> <a href="../../dados/aula/aula_05/parametros.csv"><code>parametros.csv</code></a>, <a href="../../dados/aula/aula_05/precos.csv"><code>precos.csv</code></a>. <strong>Todos são didáticos/sintéticos.</strong></p>
+<h3>Problema de decisão e dados disponibilizados</h3>
+<p><strong>Situação.</strong> Um analista compara carteiras a partir de preços históricos. O LLM poderá explicar os resultados, mas cálculos e regras de risco devem ser executados por ferramentas determinísticas.</p>
+<p><strong>Pacote de dados.</strong> <code>precos.csv</code>: preços ajustados mensais sintéticos de três ativos ao longo de 24 meses; <code>parametros.csv</code>: taxa de referência e restrição de pesos não negativos com soma igual a 1. Valores explicitamente didáticos, sem recomendações de investimento.</p>
+<h3>Laboratório em aula (60 minutos)</h3>
+<ol>
+<li><p>Recalcular manualmente dois retornos e a variância de uma carteira com dois ativos.</p>
+</li>
+<li><p>Solicitar ao Codex aplicativo com alinhamento de datas, retornos, covariância, fronteira ilustrativa e Sharpe com frequências compatíveis.</p>
+</li>
+<li><p>Testar um portfólio 100% em um ativo, soma dos pesos, datas ausentes e covariância simétrica; confrontar dois resultados com contas manuais.</p>
+</li>
+<li><p>Explorar carteira de maior retorno e de maior Sharpe, registrando limitações das estimativas.</p>
+</li>
+</ol>
+<h3>Especificação inicial por prompt</h3>
+<blockquote>
+<p><strong>Construa um analisador local de carteiras com dados do CSV, sem API convencional. Faça todos os cálculos por Python, exiba fórmulas e unidades, teste datas faltantes e limites de pesos. Qualquer explicação textual por modelo deve citar resultados realmente calculados.</strong></p>
+</blockquote>
+<h3>Critérios de aceitação</h3>
+<p>Pesos totalizam 1 dentro da tolerância; retornos e unidades consistentes; risco obtido de covariâncias; curvas identificam restrições; nenhuma conclusão é apresentada como aconselhamento financeiro.</p>
+<h3>Articulação com as demais aulas</h3>
+<p>A Aula 6 trabalha não apenas uma ferramenta de cálculo, mas o encadeamento de fontes e operações para produzir uma análise de negócio.</p>
+<h3>Roteiro de verificação com o Codex</h3>
+<ol>
+<li>Examine a base de referência e registre a origem, as colunas e a unidade de análise.</li>
+<li>Na <strong>interface gráfica do Codex</strong>, descreva a aplicação, as entradas, as saídas e os critérios de aceitação; solicite que o agente crie os arquivos.</li>
+<li>Peça ao Codex que execute os testes, mostre os resultados e explique qualquer falha encontrada. O aluno não escreve código nem usa terminal.</li>
+<li>Compare pelo menos um resultado com um cálculo ou verificação manual realizado em sala.</li>
+<li>Registre dois casos em que a aplicação deveria se abster, solicitar esclarecimento ou sinalizar uma limitação.</li>
+</ol>
+<p><strong>Material complementar:</strong> <a href="slides.pdf">slides da aula (PDF)</a> · <a href="slides.tex">fonte LaTeX</a> · <a href="exercicios.html">exercícios no papel</a> · <a href="casa.html">atividade para casa</a>.</p>
+<h2>Exercícios e preparação da prova</h2>
+<p>Os dez problemas desta aula estão reunidos no <a href="exercicios.html">caderno de exercícios</a>. Os alunos devem explicitar as contas e justificar as conclusões. A escrita manual de código não é parte das avaliações.</p>
+<h2>Verificação da aprendizagem</h2>
+<p>O quiz oficial de 15 minutos no início da aula cobre os conceitos da Aula 4 e a atividade correspondente, condicionada ao depósito no GitHub. As questões oficiais e o gabarito são reservados ao professor.</p>
+<p><a href="../../apoio/treino.html#aula-05">Questões formativas de treinamento</a> (não são as questões da avaliação oficial).</p>
+<h2>Referências para aprofundamento</h2>
+<p>Consulte a <a href="../../apoio/bibliografia.html">bibliografia da disciplina</a> e as fontes técnicas indicadas no material específico.</p>
+<footer class="footer">Insper · Paulo C. Marques F. · Materiais didáticos · Dados sintéticos quando indicado.</footer></article></div><script src="../../assets/js/gate.js"></script><script src="../../assets/js/quiz.js"></script></body></html>

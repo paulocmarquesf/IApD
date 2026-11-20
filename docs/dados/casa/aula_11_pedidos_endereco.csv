@@ -1,0 +1,9 @@
+pedido_id,status,dias_desde_compra,novo_endereco
+A001,despachado,1,Rua Exemplo 100
+A002,em_preparacao,2,Rua Exemplo 101
+A003,em_preparacao,3,Rua Exemplo 102
+A004,despachado,4,Rua Exemplo 103
+A005,em_preparacao,5,Rua Exemplo 104
+A006,em_preparacao,6,Rua Exemplo 105
+A007,despachado,7,Rua Exemplo 106
+A008,em_preparacao,8,Rua Exemplo 107

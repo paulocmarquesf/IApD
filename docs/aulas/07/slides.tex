@@ -1,0 +1,170 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage[portuguese]{babel}
+\usepackage{fontspec,unicode-math}
+\setmainfont{Noto Sans}
+\setsansfont{Noto Sans}
+\setmathfont{STIX Math}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\definecolor{InsperRed}{HTML}{a01924}
+\definecolor{Ink}{HTML}{232529}
+\setbeamercolor{frametitle}{fg=Ink}
+\setbeamercolor{structure}{fg=InsperRed}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{InsperRed}$\bullet$}
+\setbeamertemplate{footline}{%
+  \hbox{\begin{beamercolorbox}[wd=.84\paperwidth,ht=2.7ex,dp=1.2ex,leftskip=.7cm]{normal text}\scriptsize Inteligência Artificial para Decisão · Insper · 2027-1\end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.16\paperwidth,ht=2.7ex,dp=1.2ex,rightskip=.7cm plus1fil]{normal text}\hfill\scriptsize\insertframenumber\, /\, \inserttotalframenumber\end{beamercolorbox}}}
+\setbeamersize{text margin left=12mm,text margin right=12mm}
+\begin{document}
+\begin{frame}[t]{}
+\vspace{14mm}\textcolor{InsperRed}{\bfseries AULA 07}\par\vspace{4mm}{\LARGE\bfseries Retrieval-Augmented Generation}\par\vspace{6mm}{\large Macroeconomia}\par\vspace{12mm}{\color{gray}Paulo C. Marques F. · 2027-1}
+\end{frame}
+
+\begin{frame}[t]{Objetivos e verificação}
+\small
+\begin{itemize}
+\item Compreender a arquitetura de RAG e separar erros de ingestão, recuperação e geração, com controle explícito de fontes e datas.
+\item Resolver manualmente os exemplos do capítulo, identificando hipóteses e consequências.
+\item Especificar a aplicação no Codex gráfico e confrontar ao menos um resultado com evidências.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Organização do encontro}
+\small
+\begin{itemize}
+\item Apresentação dos fundamentos e resolução de problemas quantitativos no papel.
+\item Laboratório supervisionado e testes produzidos por prompts na interface gráfica do Codex, sem terminal.
+\item Atividade individual com dados diferentes e depósito no GitHub antes do quiz seguinte.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Recuperação antes da geração}
+\small
+\begin{itemize}
+\item Em Retrieval-Augmented Generation (RAG), a resposta é condicionada a trechos recuperados de um acervo.
+\item O mecanismo separa preparação do corpus, indexação, recuperação e geração.
+\item Essa distinção importa porque uma resposta pode ser incorreta por duas razões: a evidência não foi recuperada ou foi recuperada, mas o gerador não a utilizou adequadamente.
+\item A preparação define documentos, metadados, política de fragmentação (chunking) e possíveis sobreposições.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Recuperação antes da geração — continuação}
+\small
+\begin{itemize}
+\item Fragmentos curtos podem perder o referente de expressões como ``essa decisão''; longos demais podem reduzir precisão e ocupar desnecessariamente o contexto.
+\item A qualidade não depende de maximizar indiscriminadamente o número de trechos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Recuperação e top-k}
+\small
+\begin{itemize}
+\item Se um índice retorna trechos ordenados por relevância, top-k conserva apenas os primeiros.
+\item Considere a ordem e suponha que apenas contém a evidência.
+\item Com , o gerador não recebe o trecho correto.
+\item Mesmo que escreva uma resposta plausível, ela não estará fundamentada pelo corpus fornecido.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Recuperação e top-k — continuação}
+\small
+\begin{itemize}
+\item A recuperação pode ser lexical (termos coincidentes), densa (vetores de embeddings) ou híbrida.
+\item A melhor abordagem depende da estrutura dos documentos e das perguntas.
+\item Nomes, datas e números exatos são frequentemente úteis para busca lexical; paráfrases podem favorecer busca densa.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Citações e distinção entre texto e interpretação}
+\small
+\begin{itemize}
+\item Uma citação documental exige identificador, data ou versão e localização do trecho.
+\item Uma resposta sobre determinada reunião do Copom não pode ser sustentada apenas por trecho verdadeiro, porém extraído de reunião diferente.
+\item É necessário preservar a dimensão temporal.
+\item O sistema deve separar claramente (a) o que o documento afirma, (b) a síntese produzida pela aplicação e (c) interpretações adicionais do analista.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Citações e distinção entre texto e interpretação — continuação}
+\small
+\begin{itemize}
+\item Quando o acervo não responde à questão, a abstenção é um resultado legítimo.
+\item A saída não deve inventar falas nem atribuir ao Banco Central interpretações não presentes no documento.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Segurança documental e avaliação}
+\small
+\begin{itemize}
+\item Um texto recuperado pode conter instruções para o modelo.
+\item Essas instruções não têm a autoridade do prompt da aplicação.
+\item Deve-se tratar documentos como dados não confiáveis e testar tentativas de prompt injection.
+\item Para avaliar o retriever, criar perguntas com trechos relevantes identificados; para avaliar o gerador, conferir cada afirmação com a fonte correta.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Segurança documental e avaliação — continuação}
+\small
+\begin{itemize}
+\item No laboratório serão usados documentos didáticos explicitamente fictícios, com registros de reunião e data.
+\item Uma extensão opcional substitui esse conjunto por atas oficiais do Banco Central, com proveniência e versões congeladas para reprodução.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Exercício para resolver no papel 1}
+\small
+\small\textbf{7.1 O trecho certo ficou de fora}\par\vspace{4mm}Uma consulta sobre a justificativa do Copom recupera, em ordem, trechos A, B, C, D. Apenas C contém a resposta. Com , quais trechos entram no contexto? O gerador consegue justificar a resposta apenas com o que recebeu? Separe erro de recuperação de erro de geração.
+\end{frame}
+
+\begin{frame}[t]{Exercício para resolver no papel 2}
+\small
+\small\textbf{7.2 Uma referência anacrônica}\par\vspace{4mm}Uma pergunta menciona a decisão de setembro, mas a resposta cita uma ata de julho sem indicar a diferença temporal. O texto citado é verdadeiro em julho. Isso basta para responder à pergunta? Indique os três campos documentais que deveriam acompanhar o trecho.
+\end{frame}
+
+\begin{frame}[t]{Laboratório e caso aplicado}
+\small
+\begin{itemize}
+\item Área de aplicação: Macroeconomia.
+\item Escolher manualmente a evidência para duas perguntas e registrar reunião/data em cada citação.
+\item Solicitar ao Codex extração, fragmentação, indexação local, recuperação top-k e resposta com citações por trecho.
+\item Alterar k e tamanho dos fragmentos; observar uma pergunta cuja resposta desaparece do contexto e outra envolvendo reuniões diferentes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Prompt de desenvolvimento — exemplo}
+\small
+\small\textbf{Instrução fornecida ao Codex:}\par\vspace{5mm}Construa um RAG local sobre as três atas congeladas. Mostre por pergunta os trechos recuperados, reunião, data, localização e resposta fundamentada. Permita abstenção; se houver geração por LLM, use apenas o Codex Python SDK previamente validado; mantenha modo de inspeção de recuperação sem geração.
+\end{frame}
+
+\begin{frame}[t]{Critérios de aceitação e validação}
+\small
+\begin{itemize}
+\item Todas as citações apontam para trecho presente na ata correta; respostas sem evidência sinalizam insuficiência; versão de corpus e parâmetros de busca registrados; nenhuma inferência é apresentada como declaração literal do Banco Central.
+\item Inspecionar argumentos, saídas e rastros das ferramentas quando houver chamadas externas.
+\item Comparar uma saída com a resolução manual do exemplo conceitual.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Atividade individual em casa}
+\small
+\begin{itemize}
+\item Duas outras atas oficiais, previamente selecionadas e identificadas, acompanhadas de oito perguntas que exigem distinguir reuniões e justificar citações.
+\item Resolver as questões de interpretação, com cálculos e evidência documental.
+\item Depositar no GitHub os arquivos solicitados; a entrega habilita o quiz, sem valer nota.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Preparação para a avaliação escrita}
+\small
+\begin{itemize}
+\item Exercícios do caderno: 7.1 O trecho certo ficou de fora; 7.2 Uma referência anacrônica; 7.3 Chunking e referência ambígua.
+\item Formalizar o raciocínio e interpretar resultados; não será exigida escrita manual de código.
+\item No quiz seguinte serão avaliados conceitos desta aula e da atividade feita em casa.
+\end{itemize}
+\end{frame}
+
+\end{document}

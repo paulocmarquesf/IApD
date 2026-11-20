@@ -1,0 +1,72 @@
+<!doctype html><html lang="pt-BR" data-root="../../" class="js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Embeddings e similaridade semântica — Inteligência Artificial para Decisão</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></head><body><header class="site-header"><a href="../../index.html"><img src="../../assets/images/insper-logo.png" alt="Insper"></a><div><b class="course-name">Inteligência Artificial para Decisão</b><small>Ciências Econômicas e Administração · 2027-1</small></div></header><div class="layout"><nav class="side" aria-label="Navegação do curso"><strong>Disciplina</strong><a href="../../index.html" >Início</a><a href="../../programa/index.html" >Programa</a><a href="../../programa/aulas.html" >Lista de aulas</a><a href="../../aulas/01/index.html" >01. Fundamentos dos Large Language Models</a><a href="../../aulas/02/index.html" class="active" aria-current="page">02. Embeddings e similaridade semântica</a><a href="../../aulas/03/index.html" >03. Engenharia de prompts e saídas estruturadas</a><a href="../../aulas/04/index.html" >04. Avaliação de aplicações com LLMs</a><a href="../../aulas/05/index.html" >05. Integração de ferramentas computacionais</a><a href="../../aulas/06/index.html" >06. Composição de aplicações com LLMs</a><a href="../../aulas/07/index.html" >07. Retrieval-Augmented Generation</a><a href="../../aulas/08/index.html" >08. Sistemas conversacionais (chatbots)</a><a href="../../aulas/09/index.html" >09. Avaliação da recuperação de informação</a><a href="../../aulas/10/index.html" >10. Avaliação experimental de aplicações de IA</a><a href="../../aulas/11/index.html" >11. Workflows e agentes de IA</a><a href="../../aulas/12/index.html" >12. Confiabilidade e segurança de agentes</a><a href="../../caderno/index.html" >Caderno de exercícios</a><a href="../../apoio/simuladores.html" >Simuladores</a><a href="../../casos/index.html" >Casos e dados</a><a href="../../avaliacoes/index.html" >Avaliações</a><a href="../../apoio/bibliografia.html" >Bibliografia</a><a href="../../apoio/codex.html" >Codex</a></nav><article class="page"><h1>Embeddings e similaridade semântica</h1>
+<p>&lt;span class="eyebrow"&gt;Aula 02 · Marketing Analítico&lt;/span&gt;</p>
+<blockquote>
+<p><strong>Propósito:</strong> Como transformar textos em representações comparáveis sem confundir proximidade semântica com identidade de consumidores?</p>
+</blockquote>
+<p><strong>Organização do encontro:</strong> 15 minutos de quiz inicial (aulas 2 a 12); 45 minutos de conceitos e exercícios; 60 minutos de laboratório. A Aula 1 reserva 60 minutos para conceitos e 60 para o laboratório, sem quiz prévio.</p>
+<p><strong>Objetivos:</strong> Interpretar embeddings, medidas de similaridade e agrupamentos exploratórios, produzindo uma análise replicável de avaliações e marcas.</p>
+<h2>Fundamentação conceitual</h2>
+<h3>1. Representação vetorial de textos</h3>
+<p>Um modelo de <em>embeddings</em> associa a cada texto <span class="math">\(s\)</span> um vetor <span class="math">\(e(s)\in\mathbb R^d\)</span>. A representação é aprendida e depende do modelo, do idioma e do pré-processamento. Não se deve assumir que cada coordenada represente diretamente um atributo de mercado. Vetores são instrumentos para comparar descrições, mas a relação entre semântica e geometria não é perfeita: sinônimos, ironia, negação e mudança de domínio podem alterar as distâncias.</p>
+<p>No caso de avaliações, é necessário definir a <strong>unidade estatística</strong>. Um comentário, uma avaliação e um cliente não são a mesma observação. Um consumidor prolífico pode produzir dezenas de textos e dominar a distribuição dos comentários; isso não implica que domine a distribuição dos consumidores. Para segmentação de clientes, precisamos de identificadores, critérios de agregação e amostragem apropriada.</p>
+<h3>2. Produto interno, norma e similaridade</h3>
+<p>Para vetores não nulos <span class="math">\(u,v\in\mathbb R^d\)</span>, definimos</p>
+<div class="math">$$
+\langle u,v\rangle=\sum_{j=1}^d u_jv_j,\qquad
+\|u\|_2=\sqrt{\sum_{j=1}^d u_j^2},\qquad
+\cos(u,v)=\frac{\langle u,v\rangle}{\|u\|_2\|v\|_2}.
+$$</div>
+<p>A similaridade cosseno pertence ao intervalo <span class="math">\([-1,1]\)</span> para vetores reais não nulos. Ela é invariável a multiplicação por constante positiva: <span class="math">\(\cos(u,3u)=1\)</span>. Já a distância euclidiana entre <span class="math">\(u\)</span> e <span class="math">\(3u\)</span> é <span class="math">\(2\|u\|\)</span>. Portanto, alinhamento não significa proximidade absoluta nem intensidade idêntica.</p>
+<p><strong>Exemplo resolvido.</strong> Para <span class="math">\(u=(1,0)\)</span>, <span class="math">\(v=(3,4)\)</span> e <span class="math">\(w=(-2,0)\)</span>, temos <span class="math">\(\cos(u,v)=3/5\)</span>, <span class="math">\(\cos(u,w)=-1\)</span> e <span class="math">\(\|u-v\|_2=\sqrt{20}\)</span>. A diferença entre a ordenação por cosseno e por distância deve ser explicitada antes de interpretar um gráfico.</p>
+<h3>3. Agregação, agrupamentos e projeção</h3>
+<p>O centroide de <span class="math">\(m\)</span> vetores é <span class="math">\(\bar e=m^{-1}\sum_{i=1}^m e_i\)</span>. Ele minimiza a soma das distâncias euclidianas quadráticas dentro de um grupo, mas pode ser distorcido por observações extremas. Um algoritmo de agrupamento é exploratório: a existência de dois clusters numéricos não prova a existência de dois segmentos comerciais. É indispensável examinar estabilidade, conteúdo dos grupos e composição dos dados.</p>
+<p>Projetar embeddings para duas dimensões pode facilitar a inspeção, mas sempre requer atenção à distorção. Se a distância original satisfaz <span class="math">\(d(A,B)&lt;d(A,C)\)</span> e a figura apresenta o contrário, o mapa não preservou nem a ordenação local desse trio. Para posicionamento de marcas, atributos, preços e participação de mercado devem provir de fontes próprias; não são inferíveis diretamente de uma nuvem de comentários.</p>
+<h3>4. Aplicação à decisão</h3>
+<p>Na análise de marcas, a pergunta relevante pode ser: «Quais atributos estão semanticamente associados às avaliações de cada marca, e com que incerteza?». A aplicação pode recuperar avaliações exemplares, calcular centroides e localizar observações discrepantes. Deve mostrar também quantas avaliações e quantos clientes geraram cada resultado, a distribuição de notas e casos discordantes. Um gráfico sem essas informações pode ter grande apelo visual e pequeno valor analítico.</p>
+<h2>Exemplo de discussão para resolução manual</h2>
+<p>&lt;div class="tcolorbox"&gt;</p>
+<p>Considere <span class="math">\(A=(1,0)\)</span> e <span class="math">\(B=(3,4)\)</span>. O produto interno é <span class="math">\(3\)</span>, as normas são <span class="math">\(1\)</span> e <span class="math">\(5\)</span>, e a similaridade cosseno é <span class="math">\(0{,}6\)</span>. Para <span class="math">\(C=(-1,0)\)</span>, a similaridade entre <span class="math">\(A\)</span> e <span class="math">\(C\)</span> é <span class="math">\(-1\)</span>. Discutir por que <span class="math">\(B\)</span> pode ser mais distante em termos euclidianos e, ainda assim, relativamente alinhado com <span class="math">\(A\)</span>. Em um conjunto de comentários, calcular também uma média vetorial simples de dois embeddings e interpretar suas limitações.</p>
+<p>&lt;/div&gt;</p>
+<h2>Laboratório: aplicação e verificação</h2>
+<p><strong>Dados da aula:</strong> <a href="../../dados/aula/aula_02/dados.csv"><code>dados.csv</code></a>, <a href="../../dados/aula/aula_02/vetores_ilustrativos.csv"><code>vetores_ilustrativos.csv</code></a>. <strong>Todos são didáticos/sintéticos.</strong></p>
+<h3>Problema de decisão e dados disponibilizados</h3>
+<p><strong>Situação.</strong> Um fabricante deseja saber se as avaliações de quatro marcas de mochilas destacam atributos semelhantes. O objetivo é estudar a geometria da representação textual, distinguindo grupos de comentários de segmentos de clientes.</p>
+<p><strong>Pacote de dados.</strong> <code>dados.csv</code>: 48 avaliações sintéticas de quatro marcas, com <code>id</code>, <code>marca</code>, <code>texto</code> e <code>atributo-referencia</code> para oito frases demonstrativas. Modelo multilíngue local de embeddings disponibilizado previamente pelo professor, com versão registrada.</p>
+<h3>Laboratório em aula (60 minutos)</h3>
+<ol>
+<li><p>Comparar manualmente dois vetores bidimensionais e formular uma hipótese sobre uma frase próxima e outra distante.</p>
+</li>
+<li><p>Pedir ao Codex embeddings locais, matriz de cossenos, recuperação dos três vizinhos e visualização exploratória com rótulo de marca.</p>
+</li>
+<li><p>Testar cossenos para frases idênticas, matriz simétrica e casos de negação; comparar duas escolhas simples de agrupamento.</p>
+</li>
+<li><p>Examinar dois grupos com textos literais e explicar por que uma projeção 2D não demonstra segmentação de pessoas.</p>
+</li>
+</ol>
+<h3>Especificação inicial por prompt</h3>
+<blockquote>
+<p><strong>Construa um explorador local de embeddings para o conjunto de 48 avaliações. Mostre cossenos, vizinhos, grupos e textos originais; registre o modelo e parâmetros. Evite API convencional e não interprete grupos de comentários como perfis demográficos.</strong></p>
+</blockquote>
+<h3>Critérios de aceitação</h3>
+<p>Cossenos simétricos e próximos de 1 na diagonal de vetores não nulos; modelo identificado; grupos acompanhados de exemplos; nenhuma afirmação sobre market share ou número de clientes sem denominador apropriado.</p>
+<h3>Articulação com as demais aulas</h3>
+<p>A experiência com resultados textuais variáveis motiva a criação de contratos de saída, formatos estruturados e validações na Aula 3.</p>
+<h3>Roteiro de verificação com o Codex</h3>
+<ol>
+<li>Examine a base de referência e registre a origem, as colunas e a unidade de análise.</li>
+<li>Na <strong>interface gráfica do Codex</strong>, descreva a aplicação, as entradas, as saídas e os critérios de aceitação; solicite que o agente crie os arquivos.</li>
+<li>Peça ao Codex que execute os testes, mostre os resultados e explique qualquer falha encontrada. O aluno não escreve código nem usa terminal.</li>
+<li>Compare pelo menos um resultado com um cálculo ou verificação manual realizado em sala.</li>
+<li>Registre dois casos em que a aplicação deveria se abster, solicitar esclarecimento ou sinalizar uma limitação.</li>
+</ol>
+<p><strong>Material complementar:</strong> <a href="slides.pdf">slides da aula (PDF)</a> · <a href="slides.tex">fonte LaTeX</a> · <a href="exercicios.html">exercícios no papel</a> · <a href="casa.html">atividade para casa</a>.</p>
+<h2>Exercícios e preparação da prova</h2>
+<p>Os dez problemas desta aula estão reunidos no <a href="exercicios.html">caderno de exercícios</a>. Os alunos devem explicitar as contas e justificar as conclusões. A escrita manual de código não é parte das avaliações.</p>
+<h2>Verificação da aprendizagem</h2>
+<p>O quiz oficial de 15 minutos no início da aula cobre os conceitos da Aula 1 e a atividade correspondente, condicionada ao depósito no GitHub. As questões oficiais e o gabarito são reservados ao professor.</p>
+<p><a href="../../apoio/treino.html#aula-02">Questões formativas de treinamento</a> (não são as questões da avaliação oficial).</p>
+<h2>Referências para aprofundamento</h2>
+<p>Consulte a <a href="../../apoio/bibliografia.html">bibliografia da disciplina</a> e as fontes técnicas indicadas no material específico.</p>
+<h2>Simulação interativa</h2>
+<p><a href="../../assets/simuladores/index.html">Experimentar os parâmetros numéricos</a>. A simulação complementa, mas não substitui, os cálculos feitos em papel.</p>
+<footer class="footer">Insper · Paulo C. Marques F. · Materiais didáticos · Dados sintéticos quando indicado.</footer></article></div><script src="../../assets/js/gate.js"></script><script src="../../assets/js/quiz.js"></script></body></html>

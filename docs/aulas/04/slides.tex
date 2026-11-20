@@ -1,0 +1,168 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage[portuguese]{babel}
+\usepackage{fontspec,unicode-math}
+\setmainfont{Noto Sans}
+\setsansfont{Noto Sans}
+\setmathfont{STIX Math}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\definecolor{InsperRed}{HTML}{a01924}
+\definecolor{Ink}{HTML}{232529}
+\setbeamercolor{frametitle}{fg=Ink}
+\setbeamercolor{structure}{fg=InsperRed}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{InsperRed}$\bullet$}
+\setbeamertemplate{footline}{%
+  \hbox{\begin{beamercolorbox}[wd=.84\paperwidth,ht=2.7ex,dp=1.2ex,leftskip=.7cm]{normal text}\scriptsize Inteligência Artificial para Decisão · Insper · 2027-1\end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.16\paperwidth,ht=2.7ex,dp=1.2ex,rightskip=.7cm plus1fil]{normal text}\hfill\scriptsize\insertframenumber\, /\, \inserttotalframenumber\end{beamercolorbox}}}
+\setbeamersize{text margin left=12mm,text margin right=12mm}
+\begin{document}
+\begin{frame}[t]{}
+\vspace{14mm}\textcolor{InsperRed}{\bfseries AULA 04}\par\vspace{4mm}{\LARGE\bfseries Avaliação de aplicações com LLMs}\par\vspace{6mm}{\large Operações empresariais}\par\vspace{12mm}{\color{gray}Paulo C. Marques F. · 2027-1}
+\end{frame}
+
+\begin{frame}[t]{Objetivos e verificação}
+\small
+\begin{itemize}
+\item Construir um protocolo de avaliação com rótulos de referência, métricas de classificação, tipologia de falhas e comparação de prompts.
+\item Resolver manualmente os exemplos do capítulo, identificando hipóteses e consequências.
+\item Especificar a aplicação no Codex gráfico e confrontar ao menos um resultado com evidências.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Organização do encontro}
+\small
+\begin{itemize}
+\item Apresentação dos fundamentos e resolução de problemas quantitativos no papel.
+\item Laboratório supervisionado e testes produzidos por prompts na interface gráfica do Codex, sem terminal.
+\item Atividade individual com dados diferentes e depósito no GitHub antes do quiz seguinte.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{O que significa avaliar uma aplicação}
+\small
+\begin{itemize}
+\item O desempenho de uma triagem depende da definição de verdade de referência, da distribuição das mensagens e do custo dos erros.
+\item Um golden set é um conjunto cuidadosamente anotado, com regras de rotulagem e critérios de resolução de discordâncias.
+\item Não basta gerar rótulos automaticamente e tratá-los como verdade.
+\item O conjunto usado para aperfeiçoar prompts não deve ser o único conjunto usado para afirmar desempenho final: múltiplas escolhas sobre os mesmos dados geram sobreajuste à avaliação.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{O que significa avaliar uma aplicação — continuação}
+\small
+\begin{itemize}
+\item Para uma classe de interesse, a matriz de confusão contém verdadeiros positivos (), falsos positivos (), falsos negativos () e verdadeiros negativos ().
+\item Essa matriz é definida sempre em relação a um rótulo positivo declarado.
+\item Essas medidas não capturam sozinhas o custo empresarial dos erros.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{O que significa avaliar uma aplicação — formulação matemática}
+\small
+\vspace{3mm}\begin{center}\small\[\text{Precision}=\frac{\text{TP}}{\text{TP}+\text{FP}},\qquad
+\text{Recall}=\frac{\text{TP}}{\text{TP}+\text{FN}},\]\end{center}
+\vspace{3mm}\small Essas medidas não capturam sozinhas o custo empresarial dos erros.
+\end{frame}
+
+\begin{frame}[t]{O que significa avaliar uma aplicação — formulação matemática}
+\small
+\vspace{3mm}\begin{center}\small\[\text{Accuracy}=\frac{\text{TP}+\text{TN}}{\text{TP}+\text{FP}+\text{FN}+\text{TN}},\qquad
+F_1=\frac{2\text{Precision}\,\text{Recall}}{\text{Precision}+\text{Recall}}.\]\end{center}
+\vspace{3mm}\small Essas medidas não capturam sozinhas o custo empresarial dos erros.
+\end{frame}
+
+\begin{frame}[t]{Exemplo resolvido: prioridades de atendimento}
+\small
+\begin{itemize}
+\item Em 50 mensagens, admita , , e .
+\item Então , e .
+\item A aplicação deixa de identificar 60\% das mensagens realmente urgentes, apesar da maioria das decisões estar correta.
+\item Um gestor que observa só a accuracy pode tomar uma decisão inadequada.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Exemplo resolvido: prioridades de atendimento — continuação}
+\small
+\begin{itemize}
+\item Se o custo de uma falsa urgência for 1 e o custo de deixar de identificar uma urgência for 5, a perda total será .
+\item A escolha entre classificadores pode mudar quando muda a relação de custos.
+\item É necessário explicitar o critério antes de selecionar o melhor sistema.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Estabilidade e diagnóstico}
+\small
+\begin{itemize}
+\item O conjunto deve incluir classes raras, mensagens incompletas, negações e casos com múltiplos temas.
+\item Reportar apenas a média pode esconder falhas relevantes por subgrupo.
+\item Ao comparar versões, usar as mesmas entradas e controlar mudanças de taxonomia e pré-processamento.
+\item Para saídas estocásticas, replicar execuções e registrar variabilidade; uma única resposta não sustenta a afirmação de melhoria estável.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Estabilidade e diagnóstico — continuação}
+\small
+\begin{itemize}
+\item Erros de sintaxe, de classificação e de recuperação de informação são falhas diferentes.
+\item O diagnóstico deve apontar onde o processo falhou, com casos concretos e possíveis correções.
+\item Na avaliação de rótulos humanos, a discordância entre anotadores pode revelar ambiguidade real, em vez de simples defeito do prompt.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Exercício para resolver no papel 1}
+\small
+\small\textbf{4.1 Uma triagem que ignora urgências}\par\vspace{4mm}Em 50 mensagens, a classe ``urgente'' produz , , , . Calcule precision, recall e accuracy. A empresa tolera mais falsos positivos do que falsos negativos: qual métrica merece maior atenção?
+\end{frame}
+
+\begin{frame}[t]{Exercício para resolver no papel 2}
+\small
+\small\textbf{4.2 Perdas assimétricas}\par\vspace{4mm}Para o classificador A, e ; para B, e . Cada falso positivo custa 1 unidade e cada falso negativo custa 5. Calcule as duas perdas totais e indique qual sistema é preferível por esse critério.
+\end{frame}
+
+\begin{frame}[t]{Laboratório e caso aplicado}
+\small
+\begin{itemize}
+\item Área de aplicação: Operações empresariais.
+\item Definir positivo como ``urgente'' e construir uma matriz de confusão de seis casos exemplares à mão.
+\item Pedir ao Codex um painel comparativo das duas configurações, com matriz, precision, recall, custo assimétrico e lista de discordâncias.
+\item Inspecionar cinco falsos negativos e distinguir erro de referência, erro de leitura da mensagem e erro de regra.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Prompt de desenvolvimento — exemplo}
+\small
+\small\textbf{Instrução fornecida ao Codex:}\par\vspace{5mm}Construa um avaliador local que receba rótulos humanos e duas tabelas de previsões fixas por ID, calcule as métricas e mostre casos de erro. Implemente também comparação do custo com FN cinco vezes mais caro que FP, sem exigir qualquer chamada de modelo.
+\end{frame}
+
+\begin{frame}[t]{Critérios de aceitação e validação}
+\small
+\begin{itemize}
+\item Matrizes somam 60 casos; IDs pareados sem duplicação; denominadores apresentados; casos de rótulos controversos sinalizados; custo calculado com a convenção declarada.
+\item Inspecionar argumentos, saídas e rastros das ferramentas quando houver chamadas externas.
+\item Comparar uma saída com a resolução manual do exemplo conceitual.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Atividade individual em casa}
+\small
+\begin{itemize}
+\item Novo conjunto de 40 solicitações de assistência em viagem, com 12 casos urgentemente rotulados e duas versões de previsões entregues pelo professor.
+\item Resolver as questões de interpretação, com cálculos e evidência documental.
+\item Depositar no GitHub os arquivos solicitados; a entrega habilita o quiz, sem valer nota.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Preparação para a avaliação escrita}
+\small
+\begin{itemize}
+\item Exercícios do caderno: 4.1 Uma triagem que ignora urgências; 4.2 Perdas assimétricas; 4.3 A ilusão da classe majoritária.
+\item Formalizar o raciocínio e interpretar resultados; não será exigida escrita manual de código.
+\item No quiz seguinte serão avaliados conceitos desta aula e da atividade feita em casa.
+\end{itemize}
+\end{frame}
+
+\end{document}

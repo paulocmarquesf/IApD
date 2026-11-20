@@ -1,0 +1,11 @@
+site/
+__pycache__/
+.cache/
+.private/
+docente_privado/
+*.log
+*.aux
+*.nav
+*.snm
+*.toc
+*.out

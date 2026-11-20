@@ -1,0 +1,33 @@
+[project]
+site_name = "Inteligência Artificial para Decisão"
+site_description = "Insper — Ciências Econômicas e Administração"
+site_author = "Paulo C. Marques F."
+copyright = "2027 · Insper"
+nav = [
+  { "Início" = "index.md" },
+  { "Programa" = [ { "Organização" = "programa/index.md" }, { "Aulas" = "programa/aulas.md" } ] },
+  { "Aulas" = [ { "01. Fundamentos dos Large Language Models" = "aulas/01/index.md" }, { "02. Embeddings e similaridade semântica" = "aulas/02/index.md" }, { "03. Engenharia de prompts e saídas estruturadas" = "aulas/03/index.md" }, { "04. Avaliação de aplicações com LLMs" = "aulas/04/index.md" }, { "05. Integração de ferramentas computacionais" = "aulas/05/index.md" }, { "06. Composição de aplicações com LLMs" = "aulas/06/index.md" }, { "07. Retrieval-Augmented Generation" = "aulas/07/index.md" }, { "08. Sistemas conversacionais (chatbots)" = "aulas/08/index.md" }, { "09. Avaliação da recuperação de informação" = "aulas/09/index.md" }, { "10. Avaliação experimental de aplicações de IA" = "aulas/10/index.md" }, { "11. Workflows e agentes de IA" = "aulas/11/index.md" }, { "12. Confiabilidade e segurança de agentes" = "aulas/12/index.md" } ] },
+  { "Caderno" = [ { "Visão geral" = "caderno/index.md" }, { "Aula 01" = "aulas/01/exercicios.md" }, { "Aula 02" = "aulas/02/exercicios.md" }, { "Aula 03" = "aulas/03/exercicios.md" }, { "Aula 04" = "aulas/04/exercicios.md" }, { "Aula 05" = "aulas/05/exercicios.md" }, { "Aula 06" = "aulas/06/exercicios.md" }, { "Aula 07" = "aulas/07/exercicios.md" }, { "Aula 08" = "aulas/08/exercicios.md" }, { "Aula 09" = "aulas/09/exercicios.md" }, { "Aula 10" = "aulas/10/exercicios.md" }, { "Aula 11" = "aulas/11/exercicios.md" }, { "Aula 12" = "aulas/12/exercicios.md" } ] },
+  { "Atividades em casa" = [ { "Aula 01" = "aulas/01/casa.md" }, { "Aula 02" = "aulas/02/casa.md" }, { "Aula 03" = "aulas/03/casa.md" }, { "Aula 04" = "aulas/04/casa.md" }, { "Aula 05" = "aulas/05/casa.md" }, { "Aula 06" = "aulas/06/casa.md" }, { "Aula 07" = "aulas/07/casa.md" }, { "Aula 08" = "aulas/08/casa.md" }, { "Aula 09" = "aulas/09/casa.md" }, { "Aula 10" = "aulas/10/casa.md" }, { "Aula 11" = "aulas/11/casa.md" }, { "Aula 12" = "aulas/12/casa.md" } ] },
+  { "Avaliações" = "avaliacoes/index.md" },
+  { "Apoio" = [ { "Bibliografia" = "apoio/bibliografia.md" }, { "Codex" = "apoio/codex.md" }, { "Questões de treinamento" = "apoio/treino.md" }, { "API opcional" = "apoio/api-complementar.md" } ] }
+]
+extra_css = ["assets/css/course.css"]
+extra_javascript = ["assets/js/gate.js", "assets/js/quiz.js", "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"]
+[project.theme]
+variant = "modern"
+language = "pt-BR"
+logo = "assets/images/insper-logo.png"
+features = ["navigation.footer", "navigation.path", "navigation.top", "content.code.copy", "search.highlight"]
+[[project.theme.palette]]
+scheme = "default"
+primary = "red"
+accent = "red"
+[project.markdown_extensions]
+admonition = {}
+attr_list = {}
+md_in_html = {}
+footnotes = {}
+toc.permalink = true
+pymdownx.arithmatex.generic = true
+pymdownx.superfences = {}

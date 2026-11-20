@@ -1,0 +1,29 @@
+id,texto,categoria_referencia
+C001,Ainda não consegui resolver aquilo.,revisao_humana
+C002,"Preciso cancelar, não tenho meu ID.",revisao_humana
+C003,Meu pagamento?,revisao_humana
+C004,Não lembro qual curso contratei.,revisao_humana
+C005,Ainda não funcionou.,revisao_humana
+C006,Quero mudar algo no contrato.,revisao_humana
+C007,Uma parcela foi cobrada antecipadamente.,cobranca
+C008,Qual o calendário das avaliações?,outros
+C009,Não consigo acessar a aula gravada do curso.,acesso
+C010,"Solicito cancelar minha matrícula, por favor.",cancelamento
+C011,A mensalidade foi cobrada duas vezes.,cobranca
+C012,Gostaria de alterar o nome no certificado.,outros
+C013,Não recebi senha para entrar na plataforma.,acesso
+C014,Preciso interromper o curso por motivos pessoais.,cancelamento
+C015,Uma parcela foi cobrada antecipadamente.,cobranca
+C016,Qual o calendário das avaliações?,outros
+C017,Não consigo acessar a aula gravada do curso.,acesso
+C018,"Solicito cancelar minha matrícula, por favor.",cancelamento
+C019,A mensalidade foi cobrada duas vezes.,cobranca
+C020,Gostaria de alterar o nome no certificado.,outros
+C021,Não recebi senha para entrar na plataforma.,acesso
+C022,Preciso interromper o curso por motivos pessoais.,cancelamento
+C023,Uma parcela foi cobrada antecipadamente.,cobranca
+C024,Qual o calendário das avaliações?,outros
+C025,Não consigo acessar a aula gravada do curso.,acesso
+C026,"Solicito cancelar minha matrícula, por favor.",cancelamento
+C027,A mensalidade foi cobrada duas vezes.,cobranca
+C028,Gostaria de alterar o nome no certificado.,outros

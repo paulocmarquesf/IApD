@@ -1,0 +1,108 @@
+<!doctype html><html lang="pt-BR" data-root="../../" class="js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fundamentos dos Large Language Models — Inteligência Artificial para Decisão</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></head><body><header class="site-header"><a href="../../index.html"><img src="../../assets/images/insper-logo.png" alt="Insper"></a><div><b class="course-name">Inteligência Artificial para Decisão</b><small>Ciências Econômicas e Administração · 2027-1</small></div></header><div class="layout"><nav class="side" aria-label="Navegação do curso"><strong>Disciplina</strong><a href="../../index.html" >Início</a><a href="../../programa/index.html" >Programa</a><a href="../../programa/aulas.html" >Lista de aulas</a><a href="../../aulas/01/index.html" class="active" aria-current="page">01. Fundamentos dos Large Language Models</a><a href="../../aulas/02/index.html" >02. Embeddings e similaridade semântica</a><a href="../../aulas/03/index.html" >03. Engenharia de prompts e saídas estruturadas</a><a href="../../aulas/04/index.html" >04. Avaliação de aplicações com LLMs</a><a href="../../aulas/05/index.html" >05. Integração de ferramentas computacionais</a><a href="../../aulas/06/index.html" >06. Composição de aplicações com LLMs</a><a href="../../aulas/07/index.html" >07. Retrieval-Augmented Generation</a><a href="../../aulas/08/index.html" >08. Sistemas conversacionais (chatbots)</a><a href="../../aulas/09/index.html" >09. Avaliação da recuperação de informação</a><a href="../../aulas/10/index.html" >10. Avaliação experimental de aplicações de IA</a><a href="../../aulas/11/index.html" >11. Workflows e agentes de IA</a><a href="../../aulas/12/index.html" >12. Confiabilidade e segurança de agentes</a><a href="../../caderno/index.html" >Caderno de exercícios</a><a href="../../apoio/simuladores.html" >Simuladores</a><a href="../../casos/index.html" >Casos e dados</a><a href="../../avaliacoes/index.html" >Avaliações</a><a href="../../apoio/bibliografia.html" >Bibliografia</a><a href="../../apoio/codex.html" >Codex</a></nav><article class="page"><h1>Fundamentos dos Large Language Models</h1>
+<p>&lt;span class="eyebrow"&gt;Aula 01 · Marketing Analítico&lt;/span&gt;</p>
+<blockquote>
+<p><strong>Propósito:</strong> O que um LLM faz ao produzir uma resposta e por que essa resposta não é, por si só, uma evidência?</p>
+</blockquote>
+<p><strong>Organização do encontro:</strong> 15 minutos de quiz inicial (aulas 2 a 12); 45 minutos de conceitos e exercícios; 60 minutos de laboratório. A Aula 1 reserva 60 minutos para conceitos e 60 para o laboratório, sem quiz prévio.</p>
+<p><strong>Objetivos:</strong> Compreender o mecanismo de geração de linguagem e distingui-lo de classificação, cálculo e consulta a bases de dados. Iniciar a prática de especificação e verificação de software por prompts no Codex (interface gráfica).</p>
+<h2>Fundamentação conceitual</h2>
+<h3>1. Linguagem como sequência de tokens</h3>
+<p>Um <em>Large Language Model</em> (LLM) autorregressivo recebe uma sequência de tokens e estima uma distribuição de probabilidade para o token seguinte. <strong>Token não é sinônimo de palavra</strong>: uma palavra pode ser representada por vários tokens, e sinais de pontuação, espaços e fragmentos frequentes podem ter representações próprias. Consequentemente, o custo de contexto depende da tokenização efetiva. O limite de contexto inclui instruções, histórico, documentos e a própria pergunta, e não apenas o texto visível da última mensagem.</p>
+<p>Denotemos por <span class="math">\(x_1,\ldots,x_n\)</span> a sequência tokenizada. A regra da cadeia da probabilidade fornece</p>
+<div class="math">$$
+P(x_1,\ldots,x_n)=\prod_{i=1}^{n}P(x_i\mid x_1,\ldots,x_{i-1}).
+$$</div>
+<p>Essa fatoração não afirma que o modelo consulta fatos externos; descreve o problema probabilístico que a modelagem resolve. O treinamento ajusta parâmetros a partir de sequências; na inferência, o modelo aplica os parâmetros já aprendidos a um contexto particular. A aplicação de negócios é uma terceira camada: especifica como converter textos em resultados que possam ser verificados.</p>
+<h3>2. Decodificação e variabilidade</h3>
+<p>Se os escores de três tokens forem <span class="math">\(z_1,z_2,z_3\)</span>, a distribuição normalizada por <em>softmax</em> à temperatura <span class="math">\(\tau&gt;0\)</span> é</p>
+<div class="math">$$
+p_i=\frac{\exp(z_i/\tau)}{\sum_j\exp(z_j/\tau)}.
+$$</div>
+<p>A escolha <em>greedy</em> seleciona o maior <span class="math">\(p_i\)</span>; a amostragem pode selecionar alternativas menos prováveis. Temperatura controla a dispersão da distribuição, não a veracidade. Temperatura reduzida não equivale a uma verificação de fontes. O exemplo da tabela separa probabilidade de correção factual.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Próximo token</th>
+<th style="text-align:right">Probabilidade</th>
+<th style="text-align:center">Saída greedy</th>
+<th style="text-align:center">Possível na amostragem</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">mantido</td>
+<td style="text-align:right">0,50</td>
+<td style="text-align:center">Sim</td>
+<td style="text-align:center">Sim</td>
+</tr>
+<tr>
+<td style="text-align:left">ampliado</td>
+<td style="text-align:right">0,35</td>
+<td style="text-align:center">Não</td>
+<td style="text-align:center">Sim</td>
+</tr>
+<tr>
+<td style="text-align:left">revisto</td>
+<td style="text-align:right">0,15</td>
+<td style="text-align:center">Não</td>
+<td style="text-align:center">Sim</td>
+</tr>
+</tbody>
+</table>
+<p>A chance de a amostragem retornar uma alternativa a «mantido» é <span class="math">\(0{,}35+0{,}15=0{,}50\)</span>. Isso pode ser calculado sem executar nenhum modelo.</p>
+<h3>3. Atenção como combinação condicionada ao contexto</h3>
+<p>No mecanismo de <em>scaled dot-product attention</em>, para uma matriz de representações <span class="math">\(X\in\mathbb R^{n\times d}\)</span>, definimos <span class="math">\(Q=XW_Q\)</span>, <span class="math">\(K=XW_K\)</span> e <span class="math">\(V=XW_V\)</span>. Uma cabeça de atenção calcula</p>
+<div class="math">$$
+\operatorname{Attention}(Q,K,V)=\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V,
+$$</div>
+<p>em que <span class="math">\(M\)</span> impede que uma posição causal acesse tokens futuros. O produto entre queries e keys produz escores de compatibilidade; os pesos após <em>softmax</em> combinam os valores. A operação não é uma busca na internet, e pesos de atenção elevados não constituem prova de influência causal. Em um exemplo escalar com escores não normalizados <span class="math">\(3\)</span> e <span class="math">\(1\)</span> e valores <span class="math">\(4\)</span> e <span class="math">\(0\)</span>, os pesos são <span class="math">\(3/4\)</span> e <span class="math">\(1/4\)</span>, de modo que a combinação é <span class="math">\(3\)</span>.</p>
+<h3>4. Evidência, extração e inferência</h3>
+<p>Considere a avaliação «A embalagem chegou intacta, mas o produto falhou duas vezes». São sustentadas as afirmações sobre embalagem e falhas; não são sustentadas afirmações sobre fraude, reembolso ou intenção de recompra. Um painel de Marketing Analítico deve distinguir observação textual, classificação sugerida e inferência do analista. Uma citação literal verificável é mais forte do que uma descrição plausível sem rastreabilidade. Identificadores de registros permitem voltar à fonte; casos inconclusivos não devem ser convertidos artificialmente em categorias certas.</p>
+<p><strong>Exemplo resolvido.</strong> Uma janela comporta 16 tokens. Instruções consomem 5, documentos recuperados 6 e a pergunta 7. O total é 18; excede a janela em 2. Remover indiscriminadamente os dois tokens mais antigos pode eliminar uma negação ou referência. A solução deve preservar o significado, não apenas reduzir a contagem.</p>
+<h2>Exemplo de discussão para resolução manual</h2>
+<p>&lt;div class="tcolorbox"&gt;</p>
+<p>Exemplo 1: diante das probabilidades 0,50, 0,30 e 0,20 para três próximos tokens, identificar a escolha mais provável e explicar por que uma geração pode escolher outro token. Exemplo 2: dois valores escalares 4 e 0 recebem pesos de atenção proporcionais a 3 e 1; após normalização, os pesos são 0,75 e 0,25 e a combinação é 3. O estudante deve calcular os pesos e explicar que eles não são, automaticamente, medidas de importância causal.</p>
+<p>&lt;/div&gt;</p>
+<h2>Laboratório: aplicação e verificação</h2>
+<p><strong>Dados da aula:</strong> <a href="../../dados/aula/aula_01/dados.csv"><code>dados.csv</code></a>, <a href="../../dados/aula/aula_01/rotulos.csv"><code>rotulos.csv</code></a>. <strong>Todos são didáticos/sintéticos.</strong></p>
+<h3>Problema de decisão e dados disponibilizados</h3>
+<p><strong>Situação.</strong> Uma rede fictícia de cafeterias precisa compreender reclamações de clientes sem atribuir experiências a pessoas identificáveis. O produto é um painel de temas acompanhado de evidências literais, não um diagnóstico automático de intenção de compra.</p>
+<p><strong>Pacote de dados.</strong> <code>dados.csv</code>: 36 avaliações fictícias, três marcas, colunas <code>id</code>, <code>marca</code>, <code>nota</code> e <code>texto</code>. Incluir elogios mistos, negações, um comentário vazio e uma ironia. <code>rotulos.csv</code>: seis casos de referência examinados previamente pelo professor.</p>
+<h3>Laboratório em aula (60 minutos)</h3>
+<ol>
+<li><p>Conferir os 36 registros e comparar manualmente três comentários: elogio inequívoco, crítica e caso ambíguo.</p>
+</li>
+<li><p>Especificar no Codex (interface gráfica) um painel com contagens por marca, temas propostos, frases de apoio e campo “evidência insuficiente”.</p>
+</li>
+<li><p>Solicitar testes de existência de IDs, contagens e correspondência literal entre as citações e os textos de origem; inspecionar dois casos problemáticos.</p>
+</li>
+<li><p>Interpretar em conjunto: diferença entre relato observado, tema sugerido e afirmação não sustentada.</p>
+</li>
+</ol>
+<h3>Especificação inicial por prompt</h3>
+<blockquote>
+<p><strong>Crie um painel local em Python para ler os 36 comentários fictícios, organizar temas com exemplos literais e registrar afirmações incertas. Gere testes das contagens e das citações. Construa e execute tudo sem API convencional; quando necessário, integre o Codex Python SDK apenas após validar o ambiente.</strong></p>
+</blockquote>
+<h3>Critérios de aceitação</h3>
+<p>Nenhuma citação inexistente; 36 IDs preservados; informação ausente nunca inventada; pelo menos um caso classificado como inconclusivo; registro de duas falhas efetivamente encontradas nos testes.</p>
+<h3>Articulação com as demais aulas</h3>
+<p>A aula seguinte substitui a comparação impressionista de textos por uma representação vetorial mensurável. O arquivo de avaliações analisado aqui constitui a primeira versão do Projeto 1.</p>
+<h3>Roteiro de verificação com o Codex</h3>
+<ol>
+<li>Examine a base de referência e registre a origem, as colunas e a unidade de análise.</li>
+<li>Na <strong>interface gráfica do Codex</strong>, descreva a aplicação, as entradas, as saídas e os critérios de aceitação; solicite que o agente crie os arquivos.</li>
+<li>Peça ao Codex que execute os testes, mostre os resultados e explique qualquer falha encontrada. O aluno não escreve código nem usa terminal.</li>
+<li>Compare pelo menos um resultado com um cálculo ou verificação manual realizado em sala.</li>
+<li>Registre dois casos em que a aplicação deveria se abster, solicitar esclarecimento ou sinalizar uma limitação.</li>
+</ol>
+<p><strong>Material complementar:</strong> <a href="slides.pdf">slides da aula (PDF)</a> · <a href="slides.tex">fonte LaTeX</a> · <a href="exercicios.html">exercícios no papel</a> · <a href="casa.html">atividade para casa</a>.</p>
+<h2>Exercícios e preparação da prova</h2>
+<p>Os dez problemas desta aula estão reunidos no <a href="exercicios.html">caderno de exercícios</a>. Os alunos devem explicitar as contas e justificar as conclusões. A escrita manual de código não é parte das avaliações.</p>
+<h2>Verificação da aprendizagem</h2>
+<p>Não há quiz inicial neste encontro.</p>
+<p><a href="../../apoio/treino.html#aula-01">Questões formativas de treinamento</a> (não são as questões da avaliação oficial).</p>
+<h2>Referências para aprofundamento</h2>
+<p>Consulte a <a href="../../apoio/bibliografia.html">bibliografia da disciplina</a> e as fontes técnicas indicadas no material específico.</p>
+<h2>Simulação interativa</h2>
+<p><a href="../../assets/simuladores/index.html">Experimentar os parâmetros numéricos</a>. A simulação complementa, mas não substitui, os cálculos feitos em papel.</p>
+<footer class="footer">Insper · Paulo C. Marques F. · Materiais didáticos · Dados sintéticos quando indicado.</footer></article></div><script src="../../assets/js/gate.js"></script><script src="../../assets/js/quiz.js"></script></body></html>

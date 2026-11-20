@@ -1,0 +1,171 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage[portuguese]{babel}
+\usepackage{fontspec,unicode-math}
+\setmainfont{Noto Sans}
+\setsansfont{Noto Sans}
+\setmathfont{STIX Math}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\definecolor{InsperRed}{HTML}{a01924}
+\definecolor{Ink}{HTML}{232529}
+\setbeamercolor{frametitle}{fg=Ink}
+\setbeamercolor{structure}{fg=InsperRed}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{InsperRed}$\bullet$}
+\setbeamertemplate{footline}{%
+  \hbox{\begin{beamercolorbox}[wd=.84\paperwidth,ht=2.7ex,dp=1.2ex,leftskip=.7cm]{normal text}\scriptsize Inteligência Artificial para Decisão · Insper · 2027-1\end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.16\paperwidth,ht=2.7ex,dp=1.2ex,rightskip=.7cm plus1fil]{normal text}\hfill\scriptsize\insertframenumber\, /\, \inserttotalframenumber\end{beamercolorbox}}}
+\setbeamersize{text margin left=12mm,text margin right=12mm}
+\begin{document}
+\begin{frame}[t]{}
+\vspace{14mm}\textcolor{InsperRed}{\bfseries AULA 09}\par\vspace{4mm}{\LARGE\bfseries Avaliação da recuperação de informação}\par\vspace{6mm}{\large Finanças}\par\vspace{12mm}{\color{gray}Paulo C. Marques F. · 2027-1}
+\end{frame}
+
+\begin{frame}[t]{Objetivos e verificação}
+\small
+\begin{itemize}
+\item Calcular Hit@k e MRR, compreender os fundamentos de busca lexical e densa e executar comparações controladas em corpus documental.
+\item Resolver manualmente os exemplos do capítulo, identificando hipóteses e consequências.
+\item Especificar a aplicação no Codex gráfico e confrontar ao menos um resultado com evidências.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Organização do encontro}
+\small
+\begin{itemize}
+\item Apresentação dos fundamentos e resolução de problemas quantitativos no papel.
+\item Laboratório supervisionado e testes produzidos por prompts na interface gráfica do Codex, sem terminal.
+\item Atividade individual com dados diferentes e depósito no GitHub antes do quiz seguinte.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Relevância e ranking}
+\small
+\begin{itemize}
+\item A recuperação de informação é uma tarefa de ordenação: dada uma consulta , o sistema atribui escores aos documentos e produz um ranking.
+\item O desempenho depende dos juízos de relevância, não apenas da fluência do texto final.
+\item Um documento relevante pode ser deixado abaixo do corte top-k mesmo quando existe no corpus.
+\item Se é o conjunto de documentos relevantes e o conjunto dos primeiros resultados, uma medida de cobertura é .
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Relevância e ranking — continuação}
+\small
+\begin{itemize}
+\item Em tarefas com uma evidência principal, Hit@k indica se ao menos uma evidência relevante aparece nos primeiros. em que é a posição da primeira evidência relevante (adotamos quando não…
+\item Para perguntas, .
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Relevância e ranking — formulação matemática}
+\small
+\vspace{3mm}\begin{center}\small\[\operatorname{Hit@}k(q)=\mathbf1\{R(q)\cap T_k(q)\ne\varnothing\},\qquad
+\operatorname{RR}(q)=\frac1{r_q},\]\end{center}
+\vspace{3mm}\small em que é a posição da primeira evidência relevante (adotamos quando não existe no ranking).
+\end{frame}
+
+\begin{frame}[t]{Exemplo calculado}
+\small
+\begin{itemize}
+\item Em três consultas, o primeiro documento relevante aparece, respectivamente, nas posições 1, 4 e 2.
+\item A média das reciprocidades é Já Hit@3 é , pois a segunda pergunta não encontrou evidência entre os três primeiros.
+\item Relatar apenas Hit@3 esconderia a diferença entre posições 1 e 2; relatar apenas MRR não informaria quantas evidências relevantes foram recuperadas quando existem várias.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Exemplo calculado — formulação matemática}
+\small
+\vspace{3mm}\begin{center}\small\[\operatorname{MRR}=\frac{1+1/4+1/2}{3}=\frac{7}{12}\approx0{,}583.\]\end{center}
+\vspace{3mm}\small Já Hit@3 é , pois a segunda pergunta não encontrou evidência entre os três primeiros.
+\end{frame}
+
+\begin{frame}[t]{Recuperação lexical, densa e híbrida}
+\small
+\begin{itemize}
+\item TF-IDF atribui maior peso a termos frequentes no documento e pouco frequentes no acervo, com escolhas específicas de normalização.
+\item BM25 acrescenta controle de saturação e do comprimento documental.
+\item Uma formulação clássica é As constantes e controlam saturação e normalização.
+\item Busca densa compara embeddings e pode recuperar paráfrases, mas não assegura melhor resultado para identificadores, taxas ou códigos específicos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Recuperação lexical, densa e híbrida — continuação}
+\small
+\begin{itemize}
+\item Busca híbrida combina evidências de natureza distinta, exigindo uma regra de fusão.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Recuperação lexical, densa e híbrida — formulação matemática}
+\small
+\vspace{3mm}\begin{center}\small\[\operatorname{BM25}(q,d)=\sum_{t\in q}\operatorname{IDF}(t)
+\frac{f(t,d)(k_1+1)}{f(t,d)+k_1(1-b+b|d|/\overline{|d|})}.\]\end{center}
+\vspace{3mm}\small As constantes e controlam saturação e normalização.
+\end{frame}
+
+\begin{frame}[t]{Avaliar o componente certo}
+\small
+\begin{itemize}
+\item Os testes de recuperação devem ser executados antes de chamar o modelo gerador.
+\item É necessário criar um conjunto de consultas, guardar evidências esperadas, congelar o corpus e comparar rankings sob os mesmos parâmetros.
+\item Uma resposta bem redigida não é evidência de recuperação correta.
+\item Para os fundos de investimento, perguntas sobre taxas, classes e prazos devem possuir identificadores e versões documentais inequívocos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Exercício para resolver no papel 1}
+\small
+\small\textbf{9.1 Ranking de quatro perguntas}\par\vspace{4mm}Para quatro consultas, o primeiro documento relevante aparece nas posições 1, 4, 2 e não aparece nos dez primeiros. Calcule , e . Distinga porcentagem de consultas atendidas da posição média do primeiro acerto.
+\end{frame}
+
+\begin{frame}[t]{Exercício para resolver no papel 2}
+\small
+\small\textbf{9.2 O MRR distingue rankings}\par\vspace{4mm}Um buscador recupera o primeiro relevante nas posições 1 e 4 para duas perguntas; outro, nas posições 2 e 2. Calcule o MRR de cada sistema. Qual entrega a resposta mais cedo em uma pergunta e qual é mais uniforme?
+\end{frame}
+
+\begin{frame}[t]{Laboratório e caso aplicado}
+\small
+\begin{itemize}
+\item Área de aplicação: Finanças.
+\item Calcular à mão Hit@3 e MRR@3 para três rankings pequenos.
+\item Pedir ao Codex avaliador local de BM25, embeddings e fusão por postos, com mesmas consultas, corpus e rótulos.
+\item Construir relatório por consulta, não apenas médias; estudar caso lexical favorável e paráfrase favorável à busca densa.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Prompt de desenvolvimento — exemplo}
+\small
+\small\textbf{Instrução fornecida ao Codex:}\par\vspace{5mm}Implemente, sobre corpus fixo, três recuperadores locais: BM25, embeddings e combinação por postos. Use rótulos de relevância fornecidos para calcular Hit@k e MRR@k; exiba resultados por pergunta, parâmetros e casos em que cada método falha.
+\end{frame}
+
+\begin{frame}[t]{Critérios de aceitação e validação}
+\small
+\begin{itemize}
+\item Fórmulas e denominadores explícitos; método de desempate reproduzível; mesmas consultas para todos os modelos; zero para perguntas sem relevante nos k primeiros, com convenção declarada.
+\item Inspecionar argumentos, saídas e rastros das ferramentas quando houver chamadas externas.
+\item Comparar uma saída com a resolução manual do exemplo conceitual.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Atividade individual em casa}
+\small
+\begin{itemize}
+\item Novo corpus pequeno de regulamentos fictícios de fundos de investimento com 18 trechos, dez consultas e julgamentos de relevância fornecidos; algumas perguntas são paráfrases.
+\item Resolver as questões de interpretação, com cálculos e evidência documental.
+\item Depositar no GitHub os arquivos solicitados; a entrega habilita o quiz, sem valer nota.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Preparação para a avaliação escrita}
+\small
+\begin{itemize}
+\item Exercícios do caderno: 9.1 Ranking de quatro perguntas; 9.2 O MRR distingue rankings; 9.3 Correspondência exata ou semântica?.
+\item Formalizar o raciocínio e interpretar resultados; não será exigida escrita manual de código.
+\item No quiz seguinte serão avaliados conceitos desta aula e da atividade feita em casa.
+\end{itemize}
+\end{frame}
+
+\end{document}

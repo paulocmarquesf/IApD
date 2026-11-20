@@ -1,0 +1,25 @@
+id,marca,nota,texto
+B001,Lira,1,Excelente conforto; entrega no prazo.
+B002,Vale,3,"O tecido chegou intacto, mas o tamanho ficou pequeno."
+B003,Lira,5,A costura soltou após dois usos.
+B004,Vale,2,"A descrição era clara, porém a cor veio diferente."
+B005,Lira,4,"Gostei do acabamento, mas o preço é alto."
+B006,Vale,1,Não recomendo; recebi item com defeito.
+B007,Lira,3,O suporte demorou; resolveu depois de três dias.
+B008,Vale,5,"A compra chegou bem embalada, sem atrasos."
+B009,Lira,2,Não sei avaliar o desempenho ainda.
+B010,Vale,4,"O design é bonito, porém desconfortável."
+B011,Lira,1,O pedido chegou antes do esperado.
+B012,Vale,3,Não comprei novamente porque a durabilidade foi baixa.
+B013,Lira,5,Excelente conforto; entrega no prazo.
+B014,Vale,2,"O tecido chegou intacto, mas o tamanho ficou pequeno."
+B015,Lira,4,A costura soltou após dois usos.
+B016,Vale,1,"A descrição era clara, porém a cor veio diferente."
+B017,Lira,3,"Gostei do acabamento, mas o preço é alto."
+B018,Vale,5,Não recomendo; recebi item com defeito.
+B019,Lira,2,O suporte demorou; resolveu depois de três dias.
+B020,Vale,4,"A compra chegou bem embalada, sem atrasos."
+B021,Lira,1,Não sei avaliar o desempenho ainda.
+B022,Vale,3,"O design é bonito, porém desconfortável."
+B023,Lira,5,O pedido chegou antes do esperado.
+B024,Vale,2,Não comprei novamente porque a durabilidade foi baixa.

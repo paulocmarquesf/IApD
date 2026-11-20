@@ -1,0 +1,79 @@
+<!doctype html><html lang="pt-BR" data-root="../../" class="js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Avaliação da recuperação de informação — Inteligência Artificial para Decisão</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></head><body><header class="site-header"><a href="../../index.html"><img src="../../assets/images/insper-logo.png" alt="Insper"></a><div><b class="course-name">Inteligência Artificial para Decisão</b><small>Ciências Econômicas e Administração · 2027-1</small></div></header><div class="layout"><nav class="side" aria-label="Navegação do curso"><strong>Disciplina</strong><a href="../../index.html" >Início</a><a href="../../programa/index.html" >Programa</a><a href="../../programa/aulas.html" >Lista de aulas</a><a href="../../aulas/01/index.html" >01. Fundamentos dos Large Language Models</a><a href="../../aulas/02/index.html" >02. Embeddings e similaridade semântica</a><a href="../../aulas/03/index.html" >03. Engenharia de prompts e saídas estruturadas</a><a href="../../aulas/04/index.html" >04. Avaliação de aplicações com LLMs</a><a href="../../aulas/05/index.html" >05. Integração de ferramentas computacionais</a><a href="../../aulas/06/index.html" >06. Composição de aplicações com LLMs</a><a href="../../aulas/07/index.html" >07. Retrieval-Augmented Generation</a><a href="../../aulas/08/index.html" >08. Sistemas conversacionais (chatbots)</a><a href="../../aulas/09/index.html" class="active" aria-current="page">09. Avaliação da recuperação de informação</a><a href="../../aulas/10/index.html" >10. Avaliação experimental de aplicações de IA</a><a href="../../aulas/11/index.html" >11. Workflows e agentes de IA</a><a href="../../aulas/12/index.html" >12. Confiabilidade e segurança de agentes</a><a href="../../caderno/index.html" >Caderno de exercícios</a><a href="../../apoio/simuladores.html" >Simuladores</a><a href="../../casos/index.html" >Casos e dados</a><a href="../../avaliacoes/index.html" >Avaliações</a><a href="../../apoio/bibliografia.html" >Bibliografia</a><a href="../../apoio/codex.html" >Codex</a></nav><article class="page"><h1>Avaliação da recuperação de informação</h1>
+<p>&lt;span class="eyebrow"&gt;Aula 09 · Finanças&lt;/span&gt;</p>
+<blockquote>
+<p><strong>Propósito:</strong> O recuperador encontrou a informação certa e a colocou em uma posição útil do ranking?</p>
+</blockquote>
+<p><strong>Organização do encontro:</strong> 15 minutos de quiz inicial (aulas 2 a 12); 45 minutos de conceitos e exercícios; 60 minutos de laboratório. A Aula 1 reserva 60 minutos para conceitos e 60 para o laboratório, sem quiz prévio.</p>
+<p><strong>Objetivos:</strong> Calcular Hit@k e MRR, compreender os fundamentos de busca lexical e densa e executar comparações controladas em corpus documental.</p>
+<h2>Fundamentação conceitual</h2>
+<h3>1. Relevância e ranking</h3>
+<p>A recuperação de informação é uma tarefa de ordenação: dada uma consulta <span class="math">\(q\)</span>, o sistema atribui escores aos documentos e produz um ranking. O desempenho depende dos <strong>juízos de relevância</strong>, não apenas da fluência do texto final. Um documento relevante pode ser deixado abaixo do corte top-k mesmo quando existe no corpus.</p>
+<p>Se <span class="math">\(R(q)\)</span> é o conjunto de documentos relevantes e <span class="math">\(T_k(q)\)</span> o conjunto dos <span class="math">\(k\)</span> primeiros resultados, uma medida de cobertura é <span class="math">\(\operatorname{Recall@}k=|R(q)\cap T_k(q)|/|R(q)|\)</span>. Em tarefas com uma evidência principal, Hit@k indica se ao menos uma evidência relevante aparece nos <span class="math">\(k\)</span> primeiros.</p>
+<div class="math">$$
+\operatorname{Hit@}k(q)=\mathbf1\{R(q)\cap T_k(q)\ne\varnothing\},\qquad
+\operatorname{RR}(q)=\frac1{r_q},
+$$</div>
+<p>em que <span class="math">\(r_q\)</span> é a posição da primeira evidência relevante (adotamos <span class="math">\(\operatorname{RR}=0\)</span> quando não existe no ranking). Para <span class="math">\(m\)</span> perguntas, <span class="math">\(\operatorname{MRR}=m^{-1}\sum_{i=1}^m \operatorname{RR}(q_i)\)</span>.</p>
+<h3>2. Exemplo calculado</h3>
+<p>Em três consultas, o primeiro documento relevante aparece, respectivamente, nas posições 1, 4 e 2. A média das reciprocidades é</p>
+<div class="math">$$
+\operatorname{MRR}=\frac{1+1/4+1/2}{3}=\frac{7}{12}\approx0{,}583.
+$$</div>
+<p>Já Hit@3 é <span class="math">\(2/3\)</span>, pois a segunda pergunta não encontrou evidência entre os três primeiros. Relatar apenas Hit@3 esconderia a diferença entre posições 1 e 2; relatar apenas MRR não informaria quantas evidências relevantes foram recuperadas quando existem várias.</p>
+<h3>3. Recuperação lexical, densa e híbrida</h3>
+<p>TF-IDF atribui maior peso a termos frequentes no documento e pouco frequentes no acervo, com escolhas específicas de normalização. BM25 acrescenta controle de saturação e do comprimento documental. Uma formulação clássica é</p>
+<div class="math">$$
+\operatorname{BM25}(q,d)=\sum_{t\in q}\operatorname{IDF}(t)
+\frac{f(t,d)(k_1+1)}{f(t,d)+k_1(1-b+b|d|/\overline{|d|})}.
+$$</div>
+<p>As constantes <span class="math">\(k_1\)</span> e <span class="math">\(b\)</span> controlam saturação e normalização. Busca densa compara embeddings e pode recuperar paráfrases, mas não assegura melhor resultado para identificadores, taxas ou códigos específicos. Busca híbrida combina evidências de natureza distinta, exigindo uma regra de fusão.</p>
+<h3>4. Avaliar o componente certo</h3>
+<p>Os testes de recuperação devem ser executados <strong>antes</strong> de chamar o modelo gerador. É necessário criar um conjunto de consultas, guardar evidências esperadas, congelar o corpus e comparar rankings sob os mesmos parâmetros. Uma resposta bem redigida não é evidência de recuperação correta. Para os fundos de investimento, perguntas sobre taxas, classes e prazos devem possuir identificadores e versões documentais inequívocos.</p>
+<h2>Exemplo de discussão para resolução manual</h2>
+<p>&lt;div class="tcolorbox"&gt;</p>
+<p>Três consultas têm o primeiro trecho relevante nas posições <span class="math">\(2\)</span>, <span class="math">\(1\)</span> e fora do ranking recuperado. Os reciprocal ranks são <span class="math">\(\frac12\)</span>, <span class="math">\(1\)</span> e <span class="math">\(0\)</span>, de modo que <span class="math">\(\mathrm{MRR}=\frac{1/2+1+0}{3}=0{,}5\)</span>. Para <span class="math">\(k=3\)</span>, <span class="math">\(\mathrm{Hit}@3=2/3\)</span>; para <span class="math">\(k=1\)</span>, <span class="math">\(\mathrm{Hit}@1=1/3\)</span>. Explicar por que respostas eloquentes não compensam uma recuperação deficiente.</p>
+<p>&lt;/div&gt;</p>
+<h2>Laboratório: aplicação e verificação</h2>
+<p><strong>Dados da aula:</strong> <a href="../../dados/aula/aula_09/consultas.csv"><code>consultas.csv</code></a>, <a href="../../dados/aula/aula_09/relevancia.csv"><code>relevancia.csv</code></a>, <a href="../../dados/aula/aula_09/trechos.csv"><code>trechos.csv</code></a>. <strong>Todos são didáticos/sintéticos.</strong></p>
+<h3>Problema de decisão e dados disponibilizados</h3>
+<p><strong>Situação.</strong> Uma biblioteca documental precisa comparar recuperação lexical, densa e híbrida antes de decidir qual sistema alimentará um chatbot. O interesse é localizar documentos relevantes, não julgar a fluência das respostas.</p>
+<p><strong>Pacote de dados.</strong> Starter do chatbot com 20 trechos de documentos de fundos de investimento e <code>consultas.csv</code> com 12 perguntas; <code>relevancia.csv</code> com pares consulta–trecho e rótulos de referência auditados.</p>
+<h3>Laboratório em aula (60 minutos)</h3>
+<ol>
+<li><p>Calcular à mão Hit@3 e MRR@3 para três rankings pequenos.</p>
+</li>
+<li><p>Pedir ao Codex avaliador local de BM25, embeddings e fusão por postos, com mesmas consultas, corpus e rótulos.</p>
+</li>
+<li><p>Construir relatório por consulta, não apenas médias; estudar caso lexical favorável e paráfrase favorável à busca densa.</p>
+</li>
+<li><p>Comparar k=1,3,5, investigar empates e delimitar o que a avaliação de recuperação não diz sobre veracidade das respostas.</p>
+</li>
+</ol>
+<h3>Especificação inicial por prompt</h3>
+<blockquote>
+<p><strong>Implemente, sobre corpus fixo, três recuperadores locais: BM25, embeddings e combinação por postos. Use rótulos de relevância fornecidos para calcular Hit@k e MRR@k; exiba resultados por pergunta, parâmetros e casos em que cada método falha.</strong></p>
+</blockquote>
+<h3>Critérios de aceitação</h3>
+<p>Fórmulas e denominadores explícitos; método de desempate reproduzível; mesmas consultas para todos os modelos; zero para perguntas sem relevante nos k primeiros, com convenção declarada.</p>
+<h3>Articulação com as demais aulas</h3>
+<p>As noções de baseline, ganho e regressão alimentarão a avaliação experimental de aplicações completas na Aula 10.</p>
+<h3>Roteiro de verificação com o Codex</h3>
+<ol>
+<li>Examine a base de referência e registre a origem, as colunas e a unidade de análise.</li>
+<li>Na <strong>interface gráfica do Codex</strong>, descreva a aplicação, as entradas, as saídas e os critérios de aceitação; solicite que o agente crie os arquivos.</li>
+<li>Peça ao Codex que execute os testes, mostre os resultados e explique qualquer falha encontrada. O aluno não escreve código nem usa terminal.</li>
+<li>Compare pelo menos um resultado com um cálculo ou verificação manual realizado em sala.</li>
+<li>Registre dois casos em que a aplicação deveria se abster, solicitar esclarecimento ou sinalizar uma limitação.</li>
+</ol>
+<p><strong>Material complementar:</strong> <a href="slides.pdf">slides da aula (PDF)</a> · <a href="slides.tex">fonte LaTeX</a> · <a href="exercicios.html">exercícios no papel</a> · <a href="casa.html">atividade para casa</a>.</p>
+<h2>Exercícios e preparação da prova</h2>
+<p>Os dez problemas desta aula estão reunidos no <a href="exercicios.html">caderno de exercícios</a>. Os alunos devem explicitar as contas e justificar as conclusões. A escrita manual de código não é parte das avaliações.</p>
+<h2>Verificação da aprendizagem</h2>
+<p>O quiz oficial de 15 minutos no início da aula cobre os conceitos da Aula 8 e a atividade correspondente, condicionada ao depósito no GitHub. As questões oficiais e o gabarito são reservados ao professor.</p>
+<p><a href="../../apoio/treino.html#aula-09">Questões formativas de treinamento</a> (não são as questões da avaliação oficial).</p>
+<h2>Referências para aprofundamento</h2>
+<p>Consulte a <a href="../../apoio/bibliografia.html">bibliografia da disciplina</a> e as fontes técnicas indicadas no material específico.</p>
+<h2>Simulação interativa</h2>
+<p><a href="../../assets/simuladores/index.html">Experimentar os parâmetros numéricos</a>. A simulação complementa, mas não substitui, os cálculos feitos em papel.</p>
+<p><strong>Nota sobre o corpus:</strong> os fundos, classes, taxas e documentos são fictícios. O objetivo é comparar versões e classes documentais em um ambiente reproduzível.</p>
+<footer class="footer">Insper · Paulo C. Marques F. · Materiais didáticos · Dados sintéticos quando indicado.</footer></article></div><script src="../../assets/js/gate.js"></script><script src="../../assets/js/quiz.js"></script></body></html>
