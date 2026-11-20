@@ -1,6 +1,0 @@
-﻿question_id,question,relevant_file,answer
-F1,Qual a taxa do Fundo Horizonte?,horizonte.md,"1,20% ao ano"
-F2,Qual o prazo de resgate do Delta?,delta.md,D+5
-F3,Qual fundo acompanha o CDI e prioriza títulos?,omega.md,Ômega
-F4,Qual a aplicação inicial do Horizonte?,horizonte.md,R$ 1.000
-F5,Qual é o código ISIN do Fundo Delta?,,Não informado; abster-se
